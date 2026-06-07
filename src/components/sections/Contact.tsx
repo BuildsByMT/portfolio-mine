@@ -264,8 +264,8 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="John Doe"
-                        className={`w-full px-4 py-3 rounded-xl bg-white/3 border transition-colors outline-none font-sans text-sm text-white ${
-                          errors.name ? "border-rose-500/50 focus:border-rose-500" : "border-white/10 focus:border-[#00f2fe]/50"
+                        className={`w-full px-4 py-3 rounded-xl bg-white/7 border hover:border-white/30 transition-colors outline-none font-sans text-sm text-white placeholder:text-gray-500 ${
+                          errors.name ? "border-rose-500/50 focus:border-rose-500" : "border-white/20 focus:border-[#00f2fe]/50"
                         }`}
                       />
                       {errors.name && <span className="font-sans text-[10px] text-rose-400 mt-1 font-medium">{errors.name}</span>}
@@ -283,8 +283,8 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="john@example.com"
-                        className={`w-full px-4 py-3 rounded-xl bg-white/3 border transition-colors outline-none font-sans text-sm text-white ${
-                          errors.email ? "border-rose-500/50 focus:border-rose-500" : "border-white/10 focus:border-[#00f2fe]/50"
+                        className={`w-full px-4 py-3 rounded-xl bg-white/7 border hover:border-white/30 transition-colors outline-none font-sans text-sm text-white placeholder:text-gray-500 ${
+                          errors.email ? "border-rose-500/50 focus:border-rose-500" : "border-white/20 focus:border-[#00f2fe]/50"
                         }`}
                       />
                       {errors.email && <span className="font-sans text-[10px] text-rose-400 mt-1 font-medium">{errors.email}</span>}
@@ -300,7 +300,7 @@ export default function Contact() {
                         name="service"
                         value={formData.service}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 rounded-xl bg-[#09071b] border border-white/10 focus:border-[#00f2fe]/50 transition-colors outline-none font-sans text-sm text-white cursor-pointer"
+                        className="w-full px-4 py-3 rounded-xl bg-[#09071b] border border-white/20 hover:border-white/30 focus:border-[#00f2fe]/50 transition-colors outline-none font-sans text-sm text-white cursor-pointer"
                       >
                         {SERVICES_OPTIONS.map((opt) => (
                           <option key={opt} value={opt} className="bg-[#09071b] text-white">
@@ -322,8 +322,8 @@ export default function Contact() {
                         onChange={handleInputChange}
                         rows={5}
                         placeholder="Hi Muzammil, I would like to discuss a project..."
-                        className={`w-full px-4 py-3 rounded-xl bg-white/3 border transition-colors outline-none font-sans text-sm text-white resize-none ${
-                          errors.message ? "border-rose-500/50 focus:border-rose-500" : "border-white/10 focus:border-[#00f2fe]/50"
+                        className={`w-full px-4 py-3 rounded-xl bg-white/7 border hover:border-white/30 transition-colors outline-none font-sans text-sm text-white resize-none placeholder:text-gray-500 ${
+                          errors.message ? "border-rose-500/50 focus:border-rose-500" : "border-white/20 focus:border-[#00f2fe]/50"
                         }`}
                       />
                       {errors.message && <span className="font-sans text-[10px] text-rose-400 mt-1 font-medium">{errors.message}</span>}

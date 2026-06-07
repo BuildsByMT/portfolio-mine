@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Eye, X, ArrowUpRight, CheckCircle2, ArrowLeft } from "lucide-react";
 import Image from "next/image";
@@ -87,6 +87,17 @@ const PROJECTS = [
 export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState<typeof PROJECTS[0] | null>(null);
+
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedProject]);
 
   const filteredProjects = activeFilter === "All"
     ? PROJECTS
@@ -212,123 +223,123 @@ export default function Portfolio() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Detailed Popup Modal */}
-        <AnimatePresence>
-          {selectedProject && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
-            >
-              <motion.div
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 20 }}
-                transition={{ type: "spring", duration: 0.5 }}
-                className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/10 bg-[#07051a]/95 shadow-2xl p-6 sm:p-8"
-              >
-                {/* Header Back Pill and Close Button Row */}
-                <div className="flex items-center justify-between mb-6">
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white hover:border-[#00f2fe]/30 transition-all duration-300 cursor-pointer text-xs font-sans font-semibold"
-                  >
-                    <ArrowLeft className="w-3.5 h-3.5 text-[#00f2fe]" />
-                    Back to Portfolio
-                  </button>
-
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center text-white hover:text-[#00f2fe] transition-colors cursor-pointer"
-                    aria-label="Close details"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Hero Banner in Modal */}
-                <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden bg-slate-900 mb-6">
-                  <Image
-                    src={selectedProject.image}
-                    alt={selectedProject.title}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/95 via-transparent to-transparent opacity-80" />
-                  
-                  <div className="absolute bottom-4 left-6 z-10">
-                    <span className="px-3 py-1 rounded bg-[#00f2fe]/20 text-[#00f2fe] font-sans text-[10px] font-semibold uppercase tracking-wider">
-                      {selectedProject.category}
-                    </span>
-                    <h3 className="font-display text-xl sm:text-2xl font-bold text-white mt-2">
-                      {selectedProject.title}
-                    </h3>
-                  </div>
-                </div>
-
-                {/* Details grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  
-                  {/* Left (Long description) */}
-                  <div className="md:col-span-2">
-                    <h4 className="font-display text-sm font-bold text-white uppercase tracking-wider mb-2">
-                      Project Description
-                    </h4>
-                    <p className="font-sans text-gray-300 text-sm font-light leading-relaxed mb-6">
-                      {selectedProject.description}
-                    </p>
-
-                    <h4 className="font-display text-sm font-bold text-white uppercase tracking-wider mb-2">
-                      Key Impact / Results
-                    </h4>
-                    <div className="flex items-start gap-2.5 p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                      <p className="font-sans text-emerald-400 text-xs sm:text-sm font-medium italic">
-                        {selectedProject.results}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Right (Metadata / Stack) */}
-                  <div className="flex flex-col gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 h-fit">
-                    <div>
-                      <p className="font-sans text-[10px] text-gray-500 uppercase tracking-widest font-semibold">Completed:</p>
-                      <p className="font-sans text-sm text-white font-medium">{selectedProject.year}</p>
-                    </div>
-
-                    <div>
-                      <p className="font-sans text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-2">Technologies Used:</p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {selectedProject.tech.map((t) => (
-                          <span key={t} className="px-2 py-0.5 rounded bg-white/10 font-sans text-[11px] text-gray-200">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {selectedProject.link !== "#" && (
-                      <a
-                        href={selectedProject.link}
-                        target={selectedProject.link.startsWith("http") ? "_blank" : undefined}
-                        rel={selectedProject.link.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="mt-4 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-[#00f2fe] hover:bg-[#4facfe] text-black font-sans text-xs font-bold uppercase tracking-wider transition-colors hover:scale-[1.02]"
-                      >
-                        {selectedProject.link.includes("fiverr.com") ? "Order on Fiverr" : "Launch Live Website"}
-                        <ArrowUpRight className="w-3.5 h-3.5 text-black" />
-                      </a>
-                    )}
-                  </div>
-
-                </div>
-
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
       </div>
+
+      {/* Detailed Popup Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/10 bg-[#07051a]/95 shadow-2xl p-6 sm:p-8"
+            >
+              {/* Header Back Pill and Close Button Row */}
+              <div className="flex items-center justify-between mb-6">
+                <button
+                  onClick={() => setSelectedProject(null)}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white hover:border-[#00f2fe]/30 transition-all duration-300 cursor-pointer text-xs font-sans font-semibold"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5 text-[#00f2fe]" />
+                  Back to Portfolio
+                </button>
+
+                <button
+                  onClick={() => setSelectedProject(null)}
+                  className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center text-white hover:text-[#00f2fe] transition-colors cursor-pointer"
+                  aria-label="Close details"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Hero Banner in Modal */}
+              <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden bg-slate-900 mb-6">
+                <Image
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/95 via-transparent to-transparent opacity-80" />
+                
+                <div className="absolute bottom-4 left-6 z-10">
+                  <span className="px-3 py-1 rounded bg-[#00f2fe]/20 text-[#00f2fe] font-sans text-[10px] font-semibold uppercase tracking-wider">
+                    {selectedProject.category}
+                  </span>
+                  <h3 className="font-display text-xl sm:text-2xl font-bold text-white mt-2">
+                    {selectedProject.title}
+                  </h3>
+                </div>
+              </div>
+
+              {/* Details grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                {/* Left (Long description) */}
+                <div className="md:col-span-2">
+                  <h4 className="font-display text-sm font-bold text-white uppercase tracking-wider mb-2">
+                    Project Description
+                  </h4>
+                  <p className="font-sans text-gray-300 text-sm font-light leading-relaxed mb-6">
+                    {selectedProject.description}
+                  </p>
+
+                  <h4 className="font-display text-sm font-bold text-white uppercase tracking-wider mb-2">
+                    Key Impact / Results
+                  </h4>
+                  <div className="flex items-start gap-2.5 p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <p className="font-sans text-emerald-400 text-xs sm:text-sm font-medium italic">
+                      {selectedProject.results}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right (Metadata / Stack) */}
+                <div className="flex flex-col gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 h-fit">
+                  <div>
+                    <p className="font-sans text-[10px] text-gray-500 uppercase tracking-widest font-semibold">Completed:</p>
+                    <p className="font-sans text-sm text-white font-medium">{selectedProject.year}</p>
+                  </div>
+
+                  <div>
+                    <p className="font-sans text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-2">Technologies Used:</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {selectedProject.tech.map((t) => (
+                        <span key={t} className="px-2 py-0.5 rounded bg-white/10 font-sans text-[11px] text-gray-200">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {selectedProject.link !== "#" && (
+                    <a
+                      href={selectedProject.link}
+                      target={selectedProject.link.startsWith("http") ? "_blank" : undefined}
+                      rel={selectedProject.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="mt-4 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-[#00f2fe] hover:bg-[#4facfe] text-black font-sans text-xs font-bold uppercase tracking-wider transition-colors hover:scale-[1.02]"
+                    >
+                      {selectedProject.link.includes("fiverr.com") ? "Order on Fiverr" : "Launch Live Website"}
+                      <ArrowUpRight className="w-3.5 h-3.5 text-black" />
+                    </a>
+                  )}
+                </div>
+
+              </div>
+
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

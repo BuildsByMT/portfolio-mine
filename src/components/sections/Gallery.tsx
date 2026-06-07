@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Maximize2, X, ArrowLeft, Download } from "lucide-react";
 import Image from "next/image";
@@ -46,6 +46,17 @@ const GALLERY_ITEMS = [
 
 export default function Gallery() {
   const [selectedImg, setSelectedImg] = useState<typeof GALLERY_ITEMS[0] | null>(null);
+
+  useEffect(() => {
+    if (selectedImg) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedImg]);
 
   return (
     <section id="gallery" className="relative py-24 bg-[#030014]/40 overflow-hidden">
@@ -123,85 +134,85 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* Lightbox full-size pop-up */}
-        <AnimatePresence>
-          {selectedImg && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedImg(null)}
-              className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black/95 backdrop-blur-md"
+      </div>
+
+      {/* Lightbox full-size pop-up */}
+      <AnimatePresence>
+        {selectedImg && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImg(null)}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center p-4 bg-black/95 backdrop-blur-md"
+          >
+            {/* Header inside Lightbox - stop propagation so clicks inside don't close the modal */}
+            <div 
+              onClick={(e) => e.stopPropagation()} 
+              className="flex items-center justify-between w-full max-w-3xl mb-4 z-10 px-2"
             >
-              {/* Header inside Lightbox - stop propagation so clicks inside don't close the modal */}
-              <div 
-                onClick={(e) => e.stopPropagation()} 
-                className="flex items-center justify-between w-full max-w-3xl mb-4 z-10 px-2"
+              <button
+                onClick={() => setSelectedImg(null)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white hover:border-[#00f2fe]/30 transition-all duration-300 cursor-pointer text-xs font-sans font-semibold"
               >
+                <ArrowLeft className="w-3.5 h-3.5 text-[#00f2fe]" />
+                Back to Portfolio
+              </button>
+
+              <div className="flex items-center gap-3">
+                {/* Download button for Resume / Credentials */}
+                {selectedImg.category.toLowerCase().includes("resume") && (
+                  <a
+                    href={selectedImg.src}
+                    download="Muzammil_Tanveer_CV.png"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#7f00ff] to-[#e100ff] hover:shadow-[0_0_12px_rgba(225,0,255,0.3)] text-white text-xs font-sans font-semibold transition-all duration-300 border border-white/5"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    Download CV
+                  </a>
+                )}
                 <button
                   onClick={() => setSelectedImg(null)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white hover:border-[#00f2fe]/30 transition-all duration-300 cursor-pointer text-xs font-sans font-semibold"
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center text-white hover:text-[#00f2fe] transition-colors cursor-pointer"
+                  aria-label="Close Lightbox"
                 >
-                  <ArrowLeft className="w-3.5 h-3.5 text-[#00f2fe]" />
-                  Back to Portfolio
+                  <X className="w-4 h-4" />
                 </button>
-
-                <div className="flex items-center gap-3">
-                  {/* Download button for Resume / Credentials */}
-                  {selectedImg.category.toLowerCase().includes("resume") && (
-                    <a
-                      href={selectedImg.src}
-                      download="Muzammil_Tanveer_CV.png"
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#7f00ff] to-[#e100ff] hover:shadow-[0_0_12px_rgba(225,0,255,0.3)] text-white text-xs font-sans font-semibold transition-all duration-300 border border-white/5"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      Download CV
-                    </a>
-                  )}
-                  <button
-                    onClick={() => setSelectedImg(null)}
-                    className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center text-white hover:text-[#00f2fe] transition-colors cursor-pointer"
-                    aria-label="Close Lightbox"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
               </div>
+            </div>
 
-              {/* Image Frame - stop propagation so clicks here don't close the modal */}
-              <motion.div
-                initial={{ scale: 0.95 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-3xl h-[65vh] md:h-[75vh] rounded-2xl overflow-hidden bg-slate-950 border border-white/10 flex items-center justify-center p-3 shadow-2xl"
-              >
-                <Image
-                  src={selectedImg.src}
-                  alt={selectedImg.title}
-                  fill
-                  className="object-contain p-2"
-                />
-              </motion.div>
-
-              {/* Info text under photo - stop propagation */}
-              <div 
-                onClick={(e) => e.stopPropagation()}
-                className="mt-4 text-center max-w-xl z-10"
-              >
-                <span className="font-sans text-[9px] font-semibold uppercase tracking-widest text-[#00f2fe]">
-                  {selectedImg.category}
-                </span>
-                <h4 className="font-display text-lg font-bold text-white mt-1">
-                  {selectedImg.title}
-                </h4>
-              </div>
+            {/* Image Frame - stop propagation so clicks here don't close the modal */}
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-3xl h-[65vh] md:h-[75vh] rounded-2xl overflow-hidden bg-slate-950 border border-white/10 flex items-center justify-center p-3 shadow-2xl"
+            >
+              <Image
+                src={selectedImg.src}
+                alt={selectedImg.title}
+                fill
+                className="object-contain p-2"
+              />
             </motion.div>
-          )}
-        </AnimatePresence>
 
-      </div>
+            {/* Info text under photo - stop propagation */}
+            <div 
+              onClick={(e) => e.stopPropagation()}
+              className="mt-4 text-center max-w-xl z-10"
+            >
+              <span className="font-sans text-[9px] font-semibold uppercase tracking-widest text-[#00f2fe]">
+                {selectedImg.category}
+              </span>
+              <h4 className="font-display text-lg font-bold text-white mt-1">
+                {selectedImg.title}
+              </h4>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

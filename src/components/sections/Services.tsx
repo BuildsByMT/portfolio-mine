@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Video, Film, Mic, GraduationCap, FileText, 
@@ -115,6 +115,17 @@ const SERVICE_GROUPS = [
 
 export default function Services() {
   const [selectedGroup, setSelectedGroup] = useState<typeof SERVICE_GROUPS[0] | null>(null);
+
+  useEffect(() => {
+    if (selectedGroup) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedGroup]);
 
   const handleScrollToContact = (serviceName: string) => {
     const contactSection = document.querySelector("#contact");
@@ -235,118 +246,118 @@ export default function Services() {
           })}
         </div>
 
-        {/* Services Detail Blow-up Modal */}
-        <AnimatePresence>
-          {selectedGroup && (
+      </div>
+
+      {/* Services Detail Blow-up Modal */}
+      <AnimatePresence>
+        {selectedGroup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedGroup(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+          >
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedGroup(null)}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/10 bg-[#07051a]/95 shadow-2xl p-6 sm:p-8"
             >
-              <motion.div
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 20 }}
-                transition={{ type: "spring", duration: 0.5 }}
-                onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/10 bg-[#07051a]/95 shadow-2xl p-6 sm:p-8"
-              >
-                {/* Header Back Pill and Close Button Row */}
-                <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-                  <button
-                    onClick={() => setSelectedGroup(null)}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white hover:border-[#00f2fe]/30 transition-all duration-300 cursor-pointer text-xs font-sans font-semibold"
+              {/* Header Back Pill and Close Button Row */}
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
+                <button
+                  onClick={() => setSelectedGroup(null)}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white hover:border-[#00f2fe]/30 transition-all duration-300 cursor-pointer text-xs font-sans font-semibold"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5 text-[#00f2fe]" />
+                  Back to Portfolio
+                </button>
+
+                <h3 className="font-display text-lg sm:text-xl font-bold text-white hidden sm:block">
+                  {selectedGroup.title}
+                </h3>
+
+                <button
+                  onClick={() => setSelectedGroup(null)}
+                  className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center text-white hover:text-[#00f2fe] transition-colors cursor-pointer"
+                  aria-label="Close details"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Sub-services Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {selectedGroup.services.map((service) => (
+                  <div 
+                    key={service.title} 
+                    className="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col justify-between"
                   >
-                    <ArrowLeft className="w-3.5 h-3.5 text-[#00f2fe]" />
-                    Back to Portfolio
-                  </button>
+                    <div>
+                      {/* Title */}
+                      <h4 className="font-display text-base sm:text-lg font-bold text-white mb-2 text-[#00f2fe]">
+                        {service.title}
+                      </h4>
 
-                  <h3 className="font-display text-lg sm:text-xl font-bold text-white hidden sm:block">
-                    {selectedGroup.title}
-                  </h3>
+                      {/* Description */}
+                      <p className="font-sans text-gray-400 text-xs sm:text-sm font-light leading-relaxed mb-4">
+                        {service.description}
+                      </p>
 
-                  <button
-                    onClick={() => setSelectedGroup(null)}
-                    className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center text-white hover:text-[#00f2fe] transition-colors cursor-pointer"
-                    aria-label="Close details"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Sub-services Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {selectedGroup.services.map((service) => (
-                    <div 
-                      key={service.title} 
-                      className="glass-panel p-6 rounded-2xl border border-white/5 flex flex-col justify-between"
-                    >
-                      <div>
-                        {/* Title */}
-                        <h4 className="font-display text-base sm:text-lg font-bold text-white mb-2 text-[#00f2fe]">
-                          {service.title}
-                        </h4>
-
-                        {/* Description */}
-                        <p className="font-sans text-gray-400 text-xs sm:text-sm font-light leading-relaxed mb-4">
-                          {service.description}
-                        </p>
-
-                        {/* Features */}
-                        <div className="mb-4">
-                          <p className="font-sans text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-2">Key Features:</p>
-                          <ul className="flex flex-col gap-1.5 font-sans text-xs text-gray-300 font-light">
-                            {service.features.map((feat) => (
-                              <li key={feat} className="flex items-center gap-2">
-                                <span className="w-1 h-1 rounded-full bg-[#00f2fe]" />
-                                <span>{feat}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        {/* Benefits */}
-                        <div className="mb-6 pt-3 border-t border-white/5">
-                          <p className="font-sans text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Impact Benefit:</p>
-                          <p className="font-sans text-xs text-[#4facfe] font-medium italic">
-                            “{service.benefits}”
-                          </p>
-                        </div>
+                      {/* Features */}
+                      <div className="mb-4">
+                        <p className="font-sans text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-2">Key Features:</p>
+                        <ul className="flex flex-col gap-1.5 font-sans text-xs text-gray-300 font-light">
+                          {service.features.map((feat) => (
+                            <li key={feat} className="flex items-center gap-2">
+                              <span className="w-1 h-1 rounded-full bg-[#00f2fe]" />
+                              <span>{feat}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
 
-                      {/* CTA Buttons Row */}
-                      <div className="flex flex-col sm:flex-row gap-2 mt-auto">
-                        <button
-                          onClick={() => {
-                            setSelectedGroup(null);
-                            handleScrollToContact(service.title);
-                          }}
-                          className="flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-sans text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer text-center"
-                        >
-                          Book Service
-                        </button>
-                        
-                        <a
-                          href="https://www.fiverr.com/muzammil787?public_mode=true"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-emerald-600/20 hover:from-emerald-500 hover:to-emerald-600 border border-emerald-500/30 hover:border-transparent text-emerald-400 hover:text-white font-sans text-xs font-semibold uppercase tracking-wider transition-all duration-300 text-center flex items-center justify-center gap-1.5"
-                        >
-                          Order on Fiverr
-                          <ArrowUpRight className="w-3 h-3" />
-                        </a>
+                      {/* Benefits */}
+                      <div className="mb-6 pt-3 border-t border-white/5">
+                        <p className="font-sans text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Impact Benefit:</p>
+                        <p className="font-sans text-xs text-[#4facfe] font-medium italic">
+                          “{service.benefits}”
+                        </p>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
-      </div>
+                    {/* CTA Buttons Row */}
+                    <div className="flex flex-col sm:flex-row gap-2 mt-auto">
+                      <button
+                        onClick={() => {
+                          setSelectedGroup(null);
+                          handleScrollToContact(service.title);
+                        }}
+                        className="flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-sans text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer text-center"
+                      >
+                        Book Service
+                      </button>
+                      
+                      <a
+                        href="https://www.fiverr.com/muzammil787?public_mode=true"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-emerald-600/20 hover:from-emerald-500 hover:to-emerald-600 border border-emerald-500/30 hover:border-transparent text-emerald-400 hover:text-white font-sans text-xs font-semibold uppercase tracking-wider transition-all duration-300 text-center flex items-center justify-center gap-1.5"
+                      >
+                        Order on Fiverr
+                        <ArrowUpRight className="w-3 h-3" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
