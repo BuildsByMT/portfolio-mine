@@ -111,8 +111,8 @@ export default function Resume() {
           </p>
 
           <a
-            href="/assets/resume.jpg"
-            download="Muzammil_Tanveer_Resume.jpg"
+            href="/assets/resume.pdf"
+            download="Muzammil_Tanveer_Resume.pdf"
             className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#7f00ff] to-[#e100ff] hover:shadow-[0_0_20px_rgba(225,0,255,0.4)] text-white font-sans text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 border border-white/5 cursor-pointer"
           >
             <Download className="w-4 h-4" />

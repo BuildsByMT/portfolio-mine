@@ -163,8 +163,8 @@ export default function Gallery() {
                 {/* Download button for Resume / Credentials */}
                 {selectedImg.category.toLowerCase().includes("resume") && (
                   <a
-                    href={selectedImg.src}
-                    download="Muzammil_Tanveer_CV.jpg"
+                    href="/assets/resume.pdf"
+                    download="Muzammil_Tanveer_Resume.pdf"
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#7f00ff] to-[#e100ff] hover:shadow-[0_0_12px_rgba(225,0,255,0.3)] text-white text-xs font-sans font-semibold transition-all duration-300 border border-white/5"
                   >
                     <Download className="w-3.5 h-3.5" />

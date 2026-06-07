@@ -153,8 +153,8 @@ export default function Hero() {
             </button>
 
             <a
-              href="/assets/resume.jpg"
-              download="Muzammil_Tanveer_Resume.jpg"
+              href="/assets/resume.pdf"
+              download="Muzammil_Tanveer_Resume.pdf"
               className="flex items-center gap-2 px-6 py-3.5 bg-transparent border border-[#7f00ff]/30 hover:border-[#7f00ff] hover:bg-[#7f00ff]/10 text-white font-sans text-sm font-semibold uppercase tracking-wider rounded-xl transition-all duration-300"
             >
               <Download className="w-4 h-4 text-[#e100ff]" />
