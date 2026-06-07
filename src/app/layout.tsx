@@ -13,7 +13,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Muzammil Tanveer | Premium Personal Portfolio & Creative AI Developer",
+  title: "Muzammil Tanveer | Personal Portfolio & Creative AI Developer",
   description: "Explore the portfolio of Muzammil Tanveer, a Software Engineering student, freelance AI Video Creator, Academic Research Specialist, and Full-Stack React Developer.",
 };
 

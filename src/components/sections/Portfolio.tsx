@@ -15,7 +15,18 @@ const CATEGORIES = [
   "UI/UX Concepts"
 ];
 
-const PROJECTS = [
+const PROJECTS: {
+  title: string;
+  category: string;
+  tagline: string;
+  description: string;
+  image: string;
+  tech: string[];
+  results: string;
+  year: string;
+  link: string;
+  video?: string;
+}[] = [
   {
     title: "Coffee Beans Procurement Website",
     category: "UI/UX Concepts",
@@ -47,7 +58,8 @@ const PROJECTS = [
     tech: ["C#", ".NET Framework", "MS SQL", "Desktop GUI"],
     results: "Replaced legacy paper catalogs, reducing database lookup operations down to less than 100ms.",
     year: "2024",
-    link: "#"
+    link: "https://github.com/BuildsByMT/LibraryManagementSystem",
+    video: "#"
   },
   {
     title: "AI Voiceover & Media Generation",
@@ -326,10 +338,26 @@ export default function Portfolio() {
                       href={selectedProject.link}
                       target={selectedProject.link.startsWith("http") ? "_blank" : undefined}
                       rel={selectedProject.link.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="mt-4 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-[#00f2fe] hover:bg-[#4facfe] text-black font-sans text-xs font-bold uppercase tracking-wider transition-colors hover:scale-[1.02]"
+                      className="mt-4 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-[#00f2fe] hover:bg-[#4facfe] text-black font-sans text-xs font-bold uppercase tracking-wider transition-all duration-300 hover:scale-[1.02]"
                     >
-                      {selectedProject.link.includes("fiverr.com") ? "Order on Fiverr" : "Launch Live Website"}
+                      {selectedProject.link.includes("fiverr.com")
+                        ? "Order on Fiverr"
+                        : selectedProject.link.includes("github.com")
+                        ? "View GitHub Repository"
+                        : "Launch Live Website"}
                       <ArrowUpRight className="w-3.5 h-3.5 text-black" />
+                    </a>
+                  )}
+
+                  {selectedProject.video && selectedProject.video !== "#" && (
+                    <a
+                      href={selectedProject.video}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-sans text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:scale-[1.02]"
+                    >
+                      Watch Demo Video
+                      <Eye className="w-3.5 h-3.5 text-white" />
                     </a>
                   )}
                 </div>
