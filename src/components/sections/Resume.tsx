@@ -12,7 +12,7 @@ const EDUCATION = [
     degree: "Bachelor of Software Engineering (BS SE)",
     duration: "2023 - 2027",
     location: "Rawalpindi, Pakistan",
-    details: "Currently in 6th Semester. Academic excellence standing with a CGPA of 3.89. Engaging in software architecture, algorithms, and design structures."
+    details: "Completed 6th Semester. Academic excellence standing with a CGPA of 3.89. Engaging in software architecture, algorithms, and design structures."
   },
   {
     institution: "ICAP (Institute of Chartered Accountants of Pakistan)",

@@ -266,7 +266,7 @@ export default function Hero() {
             </div>
             <div>
               <p className="font-display font-bold text-xs text-white">Semester</p>
-              <p className="font-sans text-[10px] text-gray-400">Software Eng. (BS SE)</p>
+              <p className="font-sans text-[10px] text-gray-400">Completed (BS SE)</p>
             </div>
           </motion.div>
         </div>

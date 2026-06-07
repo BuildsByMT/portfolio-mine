@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Eye, X, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { Sparkles, Eye, X, ArrowUpRight, CheckCircle2, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 
 const CATEGORIES = [
@@ -25,7 +25,7 @@ const PROJECTS = [
     tech: ["HTML5", "CSS3", "JavaScript", "Responsive Design"],
     results: "35% increase in mock user engagement metrics and award-worthy visual feedback.",
     year: "2025",
-    link: "#"
+    link: "https://beanforge-pink.vercel.app/"
   },
   {
     title: "8086 Traffic Lights Controller",
@@ -50,26 +50,26 @@ const PROJECTS = [
     link: "#"
   },
   {
-    title: "AI Cinematic Sci-Fi Scene",
+    title: "AI Voiceover & Media Generation",
     category: "AI Videos",
-    tagline: "A high-fidelity concept video showing a futuristic cyberpunk cityscape.",
-    description: "An AI-synthesized motion concept exploring the integration of high-resolution image scaling, cinematic camera movements, and multi-prompt text-to-video generation. Synthesized utilizing Runway Gen-2 and advanced editing pipelines.",
-    image: "/assets/ai_cinematic.png",
-    tech: ["Runway Gen-2", "CapCut Pro", "Prompt Engineering", "AI Video Pipeline"],
-    results: "Reached 15k+ organic views on creative showcases and validated professional AI tools workflows.",
+    tagline: "Premium AI-driven voice synthesis, narration, and creative prompt engineering.",
+    description: "High-quality, professional AI voiceover production pipelines utilizing advanced neural synthesis, custom script formatting, and voice alignment. Services tailored for content creators and businesses on Fiverr.",
+    image: "/assets/ai_generative_content.jpg",
+    tech: ["ElevenLabs", "AI Voice Synthesis", "Audio Post-Production", "Fiverr Services"],
+    results: "Generated over 50+ hours of custom voiceovers with clear tones and professional pacing.",
     year: "2025",
-    link: "#"
+    link: "https://www.fiverr.com/muzammil787?public_mode=true"
   },
   {
-    title: "Financial Bottleneck Case Study",
+    title: "Professional Case Studies & Assignments",
     category: "Case Studies",
-    tagline: "Strategic analysis of corporate logistics with SWOT & data frameworks.",
-    description: "Detailed management case study analyzing operational and supply chain breakdowns. Implemented financial metrics scaling, SWOT evaluations, PESTEL frameworks, and strategic resolution maps to optimize workflows.",
-    image: "/assets/coffee_beans.png", // fallback or placeholder
-    tech: ["Case Study Frameworks", "SWOT", "PESTEL", "Strategic Management"],
-    results: "Proposed optimization roadmap that simulated a 20% increase in workflow layout efficiency.",
+    tagline: "Meticulous academic research papers, reports, summaries, and case study analysis.",
+    description: "High-quality research writing, academic assignments, summaries, and deep management case study analyses designed to meet rigorous standards. Projects are delivered globally through active Fiverr gigs.",
+    image: "/assets/case_study.jpg",
+    tech: ["Academic Research", "Case Study Analysis", "Technical Writing", "SWOT & PESTEL"],
+    results: "Successfully delivered 20+ freelance reports and summaries with outstanding customer reviews.",
     year: "2024",
-    link: "#"
+    link: "https://www.fiverr.com/muzammil787?public_mode=true"
   },
   {
     title: "Interactive UI/UX Dashboard Concept",
@@ -228,13 +228,24 @@ export default function Portfolio() {
                 transition={{ type: "spring", duration: 0.5 }}
                 className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/10 bg-[#07051a]/95 shadow-2xl p-6 sm:p-8"
               >
-                {/* Close Button */}
-                <button
-                  onClick={() => setSelectedProject(null)}
-                  className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center text-white hover:text-[#00f2fe] transition-colors cursor-pointer"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+                {/* Header Back Pill and Close Button Row */}
+                <div className="flex items-center justify-between mb-6">
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white hover:border-[#00f2fe]/30 transition-all duration-300 cursor-pointer text-xs font-sans font-semibold"
+                  >
+                    <ArrowLeft className="w-3.5 h-3.5 text-[#00f2fe]" />
+                    Back to Portfolio
+                  </button>
+
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center text-white hover:text-[#00f2fe] transition-colors cursor-pointer"
+                    aria-label="Close details"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
 
                 {/* Hero Banner in Modal */}
                 <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden bg-slate-900 mb-6">
@@ -297,13 +308,17 @@ export default function Portfolio() {
                       </div>
                     </div>
 
-                    <a
-                      href={selectedProject.link}
-                      className="mt-4 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#00f2fe] hover:bg-[#4facfe] text-black font-sans text-xs font-bold uppercase tracking-wider transition-colors"
-                    >
-                      View Live Project
-                      <ArrowUpRight className="w-3.5 h-3.5 text-black" />
-                    </a>
+                    {selectedProject.link !== "#" && (
+                      <a
+                        href={selectedProject.link}
+                        target={selectedProject.link.startsWith("http") ? "_blank" : undefined}
+                        rel={selectedProject.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="mt-4 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#00f2fe] hover:bg-[#4facfe] text-black font-sans text-xs font-bold uppercase tracking-wider transition-colors"
+                      >
+                        {selectedProject.link.includes("fiverr.com") ? "Order on Fiverr" : "View Live Project"}
+                        <ArrowUpRight className="w-3.5 h-3.5 text-black" />
+                      </a>
+                    )}
                   </div>
 
                 </div>

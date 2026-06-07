@@ -11,7 +11,6 @@ import Services from "@/components/sections/Services";
 import Portfolio from "@/components/sections/Portfolio";
 import Resume from "@/components/sections/Resume";
 import Skills from "@/components/sections/Skills";
-import Testimonials from "@/components/sections/Testimonials";
 import Gallery from "@/components/sections/Gallery";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
@@ -43,7 +42,6 @@ export default function Home() {
             <Portfolio />
             <Resume />
             <Skills />
-            <Testimonials />
             <Gallery />
             <Contact />
           </main>

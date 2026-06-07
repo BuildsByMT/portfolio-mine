@@ -136,13 +136,13 @@ export default function Contact() {
 
               {/* Email Shortcut */}
               <div className="flex items-center justify-between p-4 rounded-2xl bg-white/3 border border-white/5 group hover:border-[#00f2fe]/30 transition-colors">
-                <a href="mailto:tanveermuzammil03@gmail.com" className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-[#00f2fe]/20 flex items-center justify-center text-[#00f2fe]">
+                <a href="mailto:tanveermuzammil03@gmail.com" className="flex items-center gap-3.5 min-w-0 flex-1 mr-2">
+                  <div className="w-10 h-10 rounded-xl bg-[#00f2fe]/20 flex items-center justify-center text-[#00f2fe] flex-shrink-0">
                     <Mail className="w-4.5 h-4.5" />
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <p className="font-sans text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Email Me</p>
-                    <p className="font-sans text-xs sm:text-sm font-medium text-white group-hover:text-[#00f2fe] transition-colors">tanveermuzammil03@gmail.com</p>
+                    <p className="font-sans text-xs sm:text-sm font-medium text-white group-hover:text-[#00f2fe] transition-colors break-all">tanveermuzammil03@gmail.com</p>
                   </div>
                 </a>
 

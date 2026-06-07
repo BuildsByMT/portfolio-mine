@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Maximize2, X } from "lucide-react";
+import { Sparkles, Maximize2, X, ArrowLeft, Download } from "lucide-react";
 import Image from "next/image";
 
 const GALLERY_ITEMS = [
@@ -31,15 +31,15 @@ const GALLERY_ITEMS = [
     aspect: "aspect-[1/1.4]"
   },
   {
-    title: "AI generated cinematic sci-fi metropolis",
-    category: "Creative AI Video",
-    src: "/assets/ai_cinematic.png",
+    title: "AI Voiceover & Media Generation Gig",
+    category: "Creative AI Voiceover",
+    src: "/assets/ai_generative_content.jpg",
     aspect: "aspect-[16/10]"
   },
   {
-    title: "Traffic lights simulation controller layout",
-    category: "Hardware Logic",
-    src: "/assets/traffic_lights.png",
+    title: "Academic Writing & Case Studies Gig",
+    category: "Academic & Freelance Writing",
+    src: "/assets/case_study.jpg",
     aspect: "aspect-[16/10]"
   }
 ];
@@ -130,24 +130,52 @@ export default function Gallery() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+              onClick={() => setSelectedImg(null)}
+              className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black/95 backdrop-blur-md"
             >
-              {/* Close Button overlay */}
-              <button
-                onClick={() => setSelectedImg(null)}
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center text-white hover:text-[#00f2fe] transition-colors cursor-pointer"
-                aria-label="Close Lightbox"
+              {/* Header inside Lightbox - stop propagation so clicks inside don't close the modal */}
+              <div 
+                onClick={(e) => e.stopPropagation()} 
+                className="flex items-center justify-between w-full max-w-3xl mb-4 z-10 px-2"
               >
-                <X className="w-5 h-5" />
-              </button>
+                <button
+                  onClick={() => setSelectedImg(null)}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white hover:border-[#00f2fe]/30 transition-all duration-300 cursor-pointer text-xs font-sans font-semibold"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5 text-[#00f2fe]" />
+                  Back to Portfolio
+                </button>
 
-              {/* Image Frame */}
+                <div className="flex items-center gap-3">
+                  {/* Download button for Resume / Credentials */}
+                  {selectedImg.category.toLowerCase().includes("resume") && (
+                    <a
+                      href={selectedImg.src}
+                      download="Muzammil_Tanveer_CV.png"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#7f00ff] to-[#e100ff] hover:shadow-[0_0_12px_rgba(225,0,255,0.3)] text-white text-xs font-sans font-semibold transition-all duration-300 border border-white/5"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      Download CV
+                    </a>
+                  )}
+                  <button
+                    onClick={() => setSelectedImg(null)}
+                    className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center text-white hover:text-[#00f2fe] transition-colors cursor-pointer"
+                    aria-label="Close Lightbox"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Image Frame - stop propagation so clicks here don't close the modal */}
               <motion.div
                 initial={{ scale: 0.95 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                className="relative w-full max-w-4xl max-h-[80vh] aspect-[4/3] md:aspect-[16/10] rounded-2xl overflow-hidden bg-slate-900 border border-white/10"
+                onClick={(e) => e.stopPropagation()}
+                className="relative w-full max-w-3xl h-[65vh] md:h-[75vh] rounded-2xl overflow-hidden bg-slate-950 border border-white/10 flex items-center justify-center p-3 shadow-2xl"
               >
                 <Image
                   src={selectedImg.src}
@@ -157,8 +185,11 @@ export default function Gallery() {
                 />
               </motion.div>
 
-              {/* Info text under photo */}
-              <div className="mt-4 text-center max-w-xl">
+              {/* Info text under photo - stop propagation */}
+              <div 
+                onClick={(e) => e.stopPropagation()}
+                className="mt-4 text-center max-w-xl z-10"
+              >
                 <span className="font-sans text-[9px] font-semibold uppercase tracking-widest text-[#00f2fe]">
                   {selectedImg.category}
                 </span>
