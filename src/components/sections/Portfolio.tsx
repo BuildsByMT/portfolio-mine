@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Eye, X, ArrowUpRight, CheckCircle2, ArrowLeft } from "lucide-react";
+import { GithubIcon } from "@/components/ui/Icons";
 import Image from "next/image";
 
 const CATEGORIES = [
@@ -59,7 +60,7 @@ const PROJECTS: {
     results: "Replaced legacy paper catalogs, reducing database lookup operations down to less than 100ms.",
     year: "2024",
     link: "https://github.com/BuildsByMT/LibraryManagementSystem",
-    video: "#"
+    video: "https://drive.google.com/file/d/1lT2sGXBZ-jPx5cM446-PXhZrRtybgT7w/view?ts=686aaa6b"
   },
   {
     title: "AI Voiceover & Media Generation",
@@ -272,25 +273,55 @@ export default function Portfolio() {
                 </button>
               </div>
 
-              {/* Hero Banner in Modal */}
-              <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden bg-slate-900 mb-6">
-                <Image
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/95 via-transparent to-transparent opacity-80" />
-                
-                <div className="absolute bottom-4 left-6 z-10">
-                  <span className="px-3 py-1 rounded bg-[#00f2fe]/20 text-[#00f2fe] font-sans text-[10px] font-semibold uppercase tracking-wider">
-                    {selectedProject.category}
-                  </span>
-                  <h3 className="font-display text-xl sm:text-2xl font-bold text-white mt-2">
-                    {selectedProject.title}
-                  </h3>
-                </div>
+              {/* Project Title and Category Heading Block */}
+              <div className="mb-6">
+                <span className="px-2.5 py-1 rounded bg-[#00f2fe]/10 text-[#00f2fe] font-sans text-[10px] font-bold uppercase tracking-widest border border-[#00f2fe]/20">
+                  {selectedProject.category}
+                </span>
+                <h3 className="font-display text-2xl sm:text-3xl font-black text-white mt-3 tracking-tight">
+                  {selectedProject.title}
+                </h3>
               </div>
+
+              {/* Video Player / Hero Image Banner */}
+              {selectedProject.video && selectedProject.video !== "#" ? (
+                <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-black border border-white/10 mb-8 shadow-[0_15px_30px_rgba(0,0,0,0.5)]">
+                  {selectedProject.video.includes("drive.google.com") ? (
+                    <iframe
+                      src={selectedProject.video.replace("/view", "/preview").replace("/edit", "/preview").split("?")[0] + "?autoplay=0"}
+                      className="w-full h-full border-0"
+                      allow="autoplay; encrypted-media"
+                      allowFullScreen
+                    />
+                  ) : selectedProject.video.includes("youtube.com") || selectedProject.video.includes("youtu.be") ? (
+                    <iframe
+                      src={selectedProject.video.includes("youtube.com/watch") 
+                        ? selectedProject.video.replace("watch?v=", "embed/") 
+                        : selectedProject.video.replace("youtu.be/", "youtube.com/embed/")}
+                      className="w-full h-full border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <video
+                      src={selectedProject.video}
+                      controls
+                      className="w-full h-full object-contain"
+                      poster={selectedProject.image}
+                    />
+                  )}
+                </div>
+              ) : (
+                <div className="relative w-full aspect-[21/9] rounded-2xl overflow-hidden bg-slate-900 mb-8 border border-white/5 shadow-xl">
+                  <Image
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#030014]/60 to-transparent" />
+                </div>
+              )}
 
               {/* Details grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -316,52 +347,68 @@ export default function Portfolio() {
                 </div>
 
                 {/* Right (Metadata / Stack) */}
-                <div className="flex flex-col gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 h-fit">
-                  <div>
-                    <p className="font-sans text-[10px] text-gray-500 uppercase tracking-widest font-semibold">Completed:</p>
-                    <p className="font-sans text-sm text-white font-medium">{selectedProject.year}</p>
-                  </div>
+                <div className="flex flex-col gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 h-fit justify-between">
+                  <div className="flex flex-col gap-4">
+                    <div>
+                      <p className="font-sans text-[10px] text-gray-500 uppercase tracking-widest font-semibold">Completed:</p>
+                      <p className="font-sans text-sm text-white font-medium">{selectedProject.year}</p>
+                    </div>
 
-                  <div>
-                    <p className="font-sans text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-2">Technologies Used:</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {selectedProject.tech.map((t) => (
-                        <span key={t} className="px-2 py-0.5 rounded bg-white/10 font-sans text-[11px] text-gray-200">
-                          {t}
-                        </span>
-                      ))}
+                    <div>
+                      <p className="font-sans text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-2">Technologies Used:</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {selectedProject.tech.map((t) => (
+                          <span key={t} className="px-2 py-0.5 rounded bg-white/10 font-sans text-[11px] text-gray-200">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
 
                   {selectedProject.link !== "#" && (
-                    <a
-                      href={selectedProject.link}
-                      target={selectedProject.link.startsWith("http") ? "_blank" : undefined}
-                      rel={selectedProject.link.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="mt-4 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-[#00f2fe] hover:bg-[#4facfe] text-black font-sans text-xs font-bold uppercase tracking-wider transition-all duration-300 hover:scale-[1.02]"
-                    >
-                      {selectedProject.link.includes("fiverr.com")
-                        ? "Order on Fiverr"
-                        : selectedProject.link.includes("github.com")
-                        ? "View GitHub Repository"
-                        : "Launch Live Website"}
-                      <ArrowUpRight className="w-3.5 h-3.5 text-black" />
-                    </a>
-                  )}
+                    (() => {
+                      const isGithub = selectedProject.link.includes("github.com");
+                      const isFiverr = selectedProject.link.includes("fiverr.com");
+                      
+                      let btnClasses = "mt-4 flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl font-display text-xs font-black uppercase tracking-wider transition-all duration-300 hover:scale-[1.03] whitespace-nowrap ";
+                      
+                      if (isGithub) {
+                        btnClasses += "bg-[#1f1d2e] border border-white/10 hover:border-[#00f2fe]/40 text-white shadow-[0_0_15px_rgba(0,242,254,0.08)] hover:shadow-[0_0_20px_rgba(0,242,254,0.3)] cursor-pointer";
+                      } else if (isFiverr) {
+                        btnClasses += "bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(16,185,129,0.45)] cursor-pointer";
+                      } else {
+                        btnClasses += "bg-gradient-to-r from-[#00f2fe] to-[#4facfe] text-black hover:from-[#4facfe] hover:to-[#7f00ff] hover:text-white shadow-[0_0_15px_rgba(0,242,254,0.2)] hover:shadow-[0_0_25px_rgba(0,242,254,0.45)] cursor-pointer";
+                      }
 
-                  {selectedProject.video && selectedProject.video !== "#" && (
-                    <a
-                      href={selectedProject.video}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 flex items-center justify-center gap-1.5 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-sans text-xs font-semibold uppercase tracking-wider transition-all duration-300 hover:scale-[1.02]"
-                    >
-                      Watch Demo Video
-                      <Eye className="w-3.5 h-3.5 text-white" />
-                    </a>
+                      return (
+                        <a
+                          href={selectedProject.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={btnClasses}
+                        >
+                          {isGithub ? (
+                            <>
+                              <GithubIcon className="w-4 h-4 text-[#00f2fe] flex-shrink-0" />
+                              <span>View GitHub Repo</span>
+                            </>
+                          ) : isFiverr ? (
+                            <>
+                              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping flex-shrink-0" />
+                              <span>Order on Fiverr</span>
+                            </>
+                          ) : (
+                            <>
+                              <span>Launch Website</span>
+                              <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0" />
+                            </>
+                          )}
+                        </a>
+                      );
+                    })()
                   )}
                 </div>
-
               </div>
 
             </motion.div>
