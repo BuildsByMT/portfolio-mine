@@ -61,28 +61,52 @@ export default function Contact() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      
-      // Trigger canvas confetti burst
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ["#00f2fe", "#7f00ff", "#e100ff", "#4facfe"]
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE",
+          name: formData.name,
+          email: formData.email,
+          subject: `Portfolio Contact - ${formData.service}`,
+          message: `Client Name: ${formData.name}\nClient Email: ${formData.email}\nSelected Service: ${formData.service}\n\nMessage Details:\n${formData.message}`,
+        }),
       });
 
-      // Clear form
-      setFormData({ name: "", email: "", service: "General Inquiry", message: "" });
-    }, 1200);
+      const result = await response.json();
+
+      if (result.success) {
+        setIsSuccess(true);
+        
+        // Trigger canvas confetti burst
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ["#00f2fe", "#7f00ff", "#e100ff", "#4facfe"]
+        });
+
+        // Clear form
+        setFormData({ name: "", email: "", service: "General Inquiry", message: "" });
+      } else {
+        alert(result.message || "Failed to send message. Please configure your Web3Forms access key.");
+      }
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      alert("Unable to send message due to a connection issue. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCopyEmail = () => {
