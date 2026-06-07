@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Video, Film, Mic, GraduationCap, FileText, 
   BarChart, BookOpen, Presentation, Sparkles, 
-  Image as ImageIcon, Edit, Share2, X, ArrowLeft, ArrowRight
+  Image as ImageIcon, Edit, Share2, X, ArrowLeft, ArrowRight, ArrowUpRight
 } from "lucide-react";
 
 const SERVICE_GROUPS = [
@@ -316,16 +316,28 @@ export default function Services() {
                         </div>
                       </div>
 
-                      {/* CTA Button */}
-                      <button
-                        onClick={() => {
-                          setSelectedGroup(null);
-                          handleScrollToContact(service.title);
-                        }}
-                        className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-gradient-to-r hover:from-[#7f00ff] hover:to-[#e100ff] border border-white/10 hover:border-transparent text-white font-sans text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer"
-                      >
-                        Book Service
-                      </button>
+                      {/* CTA Buttons Row */}
+                      <div className="flex flex-col sm:flex-row gap-2 mt-auto">
+                        <button
+                          onClick={() => {
+                            setSelectedGroup(null);
+                            handleScrollToContact(service.title);
+                          }}
+                          className="flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-sans text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer text-center"
+                        >
+                          Book Service
+                        </button>
+                        
+                        <a
+                          href="https://www.fiverr.com/muzammil787?public_mode=true"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-emerald-600/20 hover:from-emerald-500 hover:to-emerald-600 border border-emerald-500/30 hover:border-transparent text-emerald-400 hover:text-white font-sans text-xs font-semibold uppercase tracking-wider transition-all duration-300 text-center flex items-center justify-center gap-1.5"
+                        >
+                          Order on Fiverr
+                          <ArrowUpRight className="w-3 h-3" />
+                        </a>
+                      </div>
                     </div>
                   ))}
                 </div>

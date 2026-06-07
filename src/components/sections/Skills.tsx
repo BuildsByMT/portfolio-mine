@@ -5,10 +5,10 @@ import { useEffect, useState, useRef } from "react";
 import { Sparkles, Terminal, Laptop, Cpu, Settings, Edit3 } from "lucide-react";
 
 const CORE_SKILLS = [
-  { name: "Prompt Engineering", percentage: 96, color: "#00f2fe", icon: Cpu },
+  { name: "Software Engineering (BS SE)", percentage: 95, color: "#00f2fe", icon: Cpu },
+  { name: "Frontend Development", percentage: 92, color: "#4facfe", icon: Terminal },
   { name: "Academic Research & Writing", percentage: 98, color: "#7f00ff", icon: Edit3 },
-  { name: "Video & Motion Editing", percentage: 92, color: "#e100ff", icon: Laptop },
-  { name: "Frontend Development", percentage: 88, color: "#4facfe", icon: Terminal },
+  { name: "AI & Media Content Editing", percentage: 90, color: "#e100ff", icon: Laptop },
 ];
 
 const SECONDARY_SKILLS = [
@@ -23,18 +23,16 @@ const SECONDARY_SKILLS = [
 ];
 
 const TOOLS = [
-  { name: "ChatGPT", category: "AI Tools", glow: "hover:shadow-[0_0_15px_rgba(16,163,127,0.3)] hover:border-[#10a37f]" },
-  { name: "Gemini", category: "AI Tools", glow: "hover:shadow-[0_0_15px_rgba(74,144,226,0.3)] hover:border-[#4a90e2]" },
-  { name: "Runway Gen-2", category: "AI Tools", glow: "hover:shadow-[0_0_15px_rgba(225,0,255,0.3)] hover:border-[#e100ff]" },
-  { name: "Midjourney", category: "AI Tools", glow: "hover:shadow-[0_0_15px_rgba(0,242,254,0.3)] hover:border-[#00f2fe]" },
-  { name: "Sora", category: "AI Tools", glow: "hover:shadow-[0_0_15px_rgba(127,0,255,0.3)] hover:border-[#7f00ff]" },
+  { name: "ChatGPT / Gemini / Sora", category: "AI Tools", glow: "hover:shadow-[0_0_15px_rgba(16,163,127,0.3)] hover:border-[#10a37f]" },
+  { name: "Runway Gen-2 / Midjourney", category: "AI Tools", glow: "hover:shadow-[0_0_15px_rgba(225,0,255,0.3)] hover:border-[#e100ff]" },
+  { name: "Vercel / Railway / Git", category: "Cloud & Devops", glow: "hover:shadow-[0_0_15px_rgba(255,255,255,0.25)] hover:border-white/30" },
+  { name: "React.js / Next.js", category: "Development", glow: "hover:shadow-[0_0_15px_rgba(0,216,255,0.3)] hover:border-[#00d8ff]" },
+  { name: "Node.js / Express / SQL", category: "Backend Eng.", glow: "hover:shadow-[0_0_15px_rgba(141,197,63,0.3)] hover:border-[#8dc53f]" },
+  { name: "C++ / OOP / Data Structures", category: "Core Software Eng.", glow: "hover:shadow-[0_0_15px_rgba(0,102,204,0.3)] hover:border-[#0066cc]" },
   { name: "Figma", category: "Design Tools", glow: "hover:shadow-[0_0_15px_rgba(242,78,29,0.3)] hover:border-[#f24e1d]" },
   { name: "Canva Pro", category: "Design Tools", glow: "hover:shadow-[0_0_15px_rgba(0,196,204,0.3)] hover:border-[#00c4cc]" },
-  { name: "Premiere Pro", category: "Editing Tools", glow: "hover:shadow-[0_0_15px_rgba(153,153,255,0.3)] hover:border-[#9999ff]" },
-  { name: "After Effects", category: "Editing Tools", glow: "hover:shadow-[0_0_15px_rgba(204,102,255,0.3)] hover:border-[#cc66ff]" },
-  { name: "CapCut Pro", category: "Editing Tools", glow: "hover:shadow-[0_0_15px_rgba(255,0,127,0.3)] hover:border-[#ff007f]" },
-  { name: "Photoshop", category: "Design Tools", glow: "hover:shadow-[0_0_15px_rgba(49,163,243,0.3)] hover:border-[#31a3f3]" },
-  { name: "React.js / Next.js", category: "Development", glow: "hover:shadow-[0_0_15px_rgba(0,216,255,0.3)] hover:border-[#00d8ff]" }
+  { name: "Premiere Pro / After Effects", category: "Editing Tools", glow: "hover:shadow-[0_0_15px_rgba(153,153,255,0.3)] hover:border-[#9999ff]" },
+  { name: "CapCut Pro / Photoshop", category: "Editing & Design", glow: "hover:shadow-[0_0_15px_rgba(255,0,127,0.3)] hover:border-[#ff007f]" }
 ];
 
 function SkillDial({ percentage, color, label, icon: Icon }: { percentage: number; color: string; label: string; icon: any }) {

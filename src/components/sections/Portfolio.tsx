@@ -309,15 +309,27 @@ export default function Portfolio() {
                     </div>
 
                     {selectedProject.link !== "#" && (
-                      <a
-                        href={selectedProject.link}
-                        target={selectedProject.link.startsWith("http") ? "_blank" : undefined}
-                        rel={selectedProject.link.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="mt-4 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#00f2fe] hover:bg-[#4facfe] text-black font-sans text-xs font-bold uppercase tracking-wider transition-colors"
-                      >
-                        {selectedProject.link.includes("fiverr.com") ? "Order on Fiverr" : "View Live Project"}
-                        <ArrowUpRight className="w-3.5 h-3.5 text-black" />
-                      </a>
+                      <div className="flex flex-col gap-2 mt-4">
+                        <a
+                          href={selectedProject.link}
+                          target={selectedProject.link.startsWith("http") ? "_blank" : undefined}
+                          rel={selectedProject.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                          className="w-full flex items-center justify-center gap-1.5 py-3 rounded-xl bg-[#00f2fe] hover:bg-[#4facfe] text-black font-sans text-xs font-bold uppercase tracking-wider transition-colors hover:scale-[1.02]"
+                        >
+                          {selectedProject.link.includes("fiverr.com") ? "Order on Fiverr" : "Launch Live Website"}
+                          <ArrowUpRight className="w-3.5 h-3.5 text-black" />
+                        </a>
+                        
+                        {/* Prominent clickable text link showing exact site address */}
+                        <a
+                          href={selectedProject.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[11px] text-center text-[#00f2fe]/80 hover:text-[#00f2fe] hover:underline font-mono break-all mt-1.5 transition-colors tracking-wide"
+                        >
+                          {selectedProject.link.replace("https://", "")} ↗
+                        </a>
+                      </div>
                     )}
                   </div>
 
