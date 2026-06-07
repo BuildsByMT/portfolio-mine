@@ -153,8 +153,8 @@ export default function Hero() {
             </button>
 
             <a
-              href="/assets/resume.png"
-              download="Muzammil_Tanveer_Resume.png"
+              href="/assets/resume.jpg"
+              download="Muzammil_Tanveer_Resume.jpg"
               className="flex items-center gap-2 px-6 py-3.5 bg-transparent border border-[#7f00ff]/30 hover:border-[#7f00ff] hover:bg-[#7f00ff]/10 text-white font-sans text-sm font-semibold uppercase tracking-wider rounded-xl transition-all duration-300"
             >
               <Download className="w-4 h-4 text-[#e100ff]" />
@@ -247,7 +247,7 @@ export default function Hero() {
             className="absolute top-10 -left-6 sm:-left-12 glass-card px-5 py-3 rounded-2xl border border-white/10 shadow-lg flex items-center gap-3 backdrop-blur-md z-20 hover:scale-105 transition-transform duration-300"
           >
             <div className="w-10 h-10 rounded-xl bg-[#00f2fe]/20 flex items-center justify-center font-display font-extrabold text-[#00f2fe] text-sm">
-              3.89
+              3.91
             </div>
             <div>
               <p className="font-display font-bold text-xs text-white">CGPA</p>

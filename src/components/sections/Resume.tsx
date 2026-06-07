@@ -12,7 +12,7 @@ const EDUCATION = [
     degree: "Bachelor of Software Engineering (BS SE)",
     duration: "2023 - 2027",
     location: "Rawalpindi, Pakistan",
-    details: "Completed 6th Semester. Academic excellence standing with a CGPA of 3.89. Engaging in software architecture, algorithms, and design structures."
+    details: "Completed 6th Semester. Academic excellence standing with a CGPA of 3.91. Engaging in software architecture, algorithms, and design structures."
   },
   {
     institution: "ICAP (Institute of Chartered Accountants of Pakistan)",
@@ -111,8 +111,8 @@ export default function Resume() {
           </p>
 
           <a
-            href="/assets/resume.png"
-            download="Muzammil_Tanveer_Resume.png"
+            href="/assets/resume.jpg"
+            download="Muzammil_Tanveer_Resume.jpg"
             className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#7f00ff] to-[#e100ff] hover:shadow-[0_0_20px_rgba(225,0,255,0.4)] text-white font-sans text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 border border-white/5 cursor-pointer"
           >
             <Download className="w-4 h-4" />
