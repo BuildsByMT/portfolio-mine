@@ -5,47 +5,60 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Maximize2, X, ArrowLeft, Download } from "lucide-react";
 import Image from "next/image";
 
-const GALLERY_ITEMS = [
+interface GalleryItem {
+  title: string;
+  category: string;
+  src: string;
+  gridClass: string;
+}
+
+const GALLERY_ITEMS: GalleryItem[] = [
   {
     title: "Muzammil Tanveer - Portrait",
     category: "Professional Photo",
     src: "/assets/portrait.jpg",
-    aspect: "aspect-[3/4]"
-  },
-  {
-    title: "Curriculum Vitae",
-    category: "Resume & Credentials",
-    src: "/assets/resume.jpg",
-    aspect: "aspect-[1/1.4]"
+    gridClass:
+      "md:col-start-1 md:row-start-1 md:row-span-2 lg:col-start-1 lg:row-start-1 lg:row-span-2",
   },
   {
     title: "AI Voiceover & Media Generation Gig",
     category: "Creative AI Voiceover",
     src: "/assets/ai_generative_content.jpg",
-    aspect: "aspect-[16/10]"
+    gridClass:
+      "md:col-start-2 md:row-start-1 lg:col-start-2 lg:col-span-2 lg:row-start-1",
   },
   {
     title: "Certificate of Excellence in Team HR",
     category: "Erudite Coaching Centre — Internship Recognition",
     src: "/assets/cert_erudite_hr.png",
-    aspect: "aspect-[16/11]"
-  },
-  {
-    title: "Certificate of Tailwind CSS Workshop",
-    category: "YoungDev Interns — 3-Day Training Completion",
-    src: "/assets/cert_tailwind_workshop.png",
-    aspect: "aspect-[16/11]"
+    gridClass:
+      "md:col-start-1 md:row-start-3 lg:col-start-2 lg:row-start-2",
   },
   {
     title: "Certificate of Assessment of Fundamental Competencies",
     category: "The Institute of Chartered Accountants of Pakistan (ICAP)",
     src: "/assets/cert_icap_afc.jpg",
-    aspect: "aspect-[1/1.4]"
-  }
+    gridClass:
+      "md:col-start-2 md:row-start-2 md:row-span-2 lg:col-start-3 lg:row-start-2 lg:row-span-2",
+  },
+  {
+    title: "Curriculum Vitae",
+    category: "Resume & Credentials",
+    src: "/assets/resume.jpg",
+    gridClass:
+      "md:col-start-1 md:row-start-4 lg:col-start-1 lg:row-start-3",
+  },
+  {
+    title: "Certificate of Tailwind CSS Workshop",
+    category: "YoungDev Interns — 3-Day Training Completion",
+    src: "/assets/cert_tailwind_workshop.png",
+    gridClass:
+      "md:col-start-2 md:row-start-4 lg:col-start-2 lg:row-start-3",
+  },
 ];
 
 export default function Gallery() {
-  const [selectedImg, setSelectedImg] = useState<typeof GALLERY_ITEMS[0] | null>(null);
+  const [selectedImg, setSelectedImg] = useState<GalleryItem | null>(null);
 
   useEffect(() => {
     if (selectedImg) {
@@ -88,8 +101,8 @@ export default function Gallery() {
           </p>
         </div>
 
-        {/* Masonry Layout Grid */}
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+        {/* Bento Grid Layout — no wasted space */}
+        <div className="grid grid-cols-1 auto-rows-[280px] md:grid-cols-2 md:auto-rows-[220px] lg:grid-cols-3 lg:auto-rows-[230px] gap-4">
           {GALLERY_ITEMS.map((item, idx) => (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -98,31 +111,29 @@ export default function Gallery() {
               transition={{ delay: (idx % 3) * 0.1, duration: 0.5 }}
               key={item.title}
               onClick={() => setSelectedImg(item)}
-              className="break-inside-avoid relative group glass-panel rounded-2xl overflow-hidden border border-white/5 hover:border-white/12 cursor-pointer shadow-lg"
+              className={`relative group glass-panel rounded-2xl overflow-hidden border border-white/5 hover:border-white/12 cursor-pointer shadow-lg ${item.gridClass}`}
             >
-              {/* Image box */}
-              <div className={`relative w-full ${item.aspect} bg-slate-950`}>
-                <Image
-                  src={item.src}
-                  alt={item.title}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                />
-                
-                {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/80 via-transparent to-transparent opacity-60 group-hover:opacity-85 transition-opacity" />
+              {/* Full-bleed image */}
+              <Image
+                src={item.src}
+                alt={item.title}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+              />
 
-                {/* Hover Maximize indicator */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-15">
-                  <div className="w-10 h-10 rounded-xl bg-black/60 border border-white/20 backdrop-blur-md flex items-center justify-center text-white">
-                    <Maximize2 className="w-4.5 h-4.5 text-[#00f2fe]" />
-                  </div>
+              {/* Overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
+
+              {/* Hover Maximize indicator */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-[5]">
+                <div className="w-10 h-10 rounded-xl bg-black/60 border border-white/20 backdrop-blur-md flex items-center justify-center text-white">
+                  <Maximize2 className="w-4.5 h-4.5 text-[#00f2fe]" />
                 </div>
               </div>
 
               {/* Title card overlay (shows on card bottom) */}
-              <div className="absolute bottom-0 left-0 right-0 p-5 z-10 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 pointer-events-none">
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 z-10 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 pointer-events-none">
                 <span className="font-sans text-[8px] font-semibold uppercase tracking-wider text-[#4facfe] block mb-1">
                   {item.category}
                 </span>
