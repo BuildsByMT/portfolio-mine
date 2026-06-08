@@ -13,18 +13,6 @@ const GALLERY_ITEMS = [
     aspect: "aspect-[3/4]"
   },
   {
-    title: "Coffee Beans procurement web GUI",
-    category: "E-Commerce Design",
-    src: "/assets/coffee_beans.png",
-    aspect: "aspect-[16/10]"
-  },
-  {
-    title: "LMS Analytics Dashboard design",
-    category: "Software UI/UX",
-    src: "/assets/library_system.png",
-    aspect: "aspect-[16/10]"
-  },
-  {
     title: "Curriculum Vitae",
     category: "Resume & Credentials",
     src: "/assets/resume.jpg",
@@ -37,10 +25,16 @@ const GALLERY_ITEMS = [
     aspect: "aspect-[16/10]"
   },
   {
-    title: "Academic Writing & Case Studies Gig",
-    category: "Academic & Freelance Writing",
-    src: "/assets/case_study.jpg",
-    aspect: "aspect-[16/10]"
+    title: "Certificate of Excellence in Team HR",
+    category: "Erudite Coaching Centre — Internship Recognition",
+    src: "/assets/cert_erudite_hr.png",
+    aspect: "aspect-[16/11]"
+  },
+  {
+    title: "Certificate of Tailwind CSS Workshop",
+    category: "YoungDev Interns — 3-Day Training Completion",
+    src: "/assets/cert_tailwind_workshop.png",
+    aspect: "aspect-[16/11]"
   }
 ];
 
@@ -84,7 +78,7 @@ export default function Gallery() {
           </h2>
           
           <p className="font-sans text-gray-400 text-sm sm:text-base max-w-xl font-light">
-            A visual gallery presenting structural designs, micro-controller interfaces, and portfolio images.
+            A visual gallery presenting professional credentials, certificates, and portfolio images.
           </p>
         </div>
 
