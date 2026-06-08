@@ -35,6 +35,12 @@ const GALLERY_ITEMS = [
     category: "YoungDev Interns — 3-Day Training Completion",
     src: "/assets/cert_tailwind_workshop.png",
     aspect: "aspect-[16/11]"
+  },
+  {
+    title: "Certificate of Assessment of Fundamental Competencies",
+    category: "The Institute of Chartered Accountants of Pakistan (ICAP)",
+    src: "/assets/cert_icap_afc.jpg",
+    aspect: "aspect-[1/1.4]"
   }
 ];
 
