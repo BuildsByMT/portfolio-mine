@@ -9,6 +9,15 @@ export default function ParticleBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Check if we are on a mobile/tablet device based on physical screen dimensions or touch points.
+    // Mobile/tablet screens are physically less than 1024px wide, even in desktop site mode.
+    // Disabling the heavy canvas rendering on mobile eliminates GPU compositing driver bugs and saves battery.
+    const isMobileDevice = window.screen.width < 1024 || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    if (isMobileDevice) {
+      canvas.style.display = "none";
+      return;
+    }
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 

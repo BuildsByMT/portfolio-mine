@@ -32,7 +32,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+                var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.screen.width < 1024);
                 if (isTouch) {
                   document.documentElement.classList.add('is-touch');
                 }
