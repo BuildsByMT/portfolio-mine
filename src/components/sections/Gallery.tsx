@@ -10,6 +10,7 @@ interface GalleryItem {
   category: string;
   src: string;
   gridClass: string;
+  objectClass?: string;
 }
 
 const GALLERY_ITEMS: GalleryItem[] = [
@@ -26,6 +27,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
     src: "/assets/ai_generative_content.jpg",
     gridClass:
       "md:col-start-2 md:row-start-1 lg:col-start-2 lg:col-span-2 lg:row-start-1",
+    objectClass: "object-top",
   },
   {
     title: "Certificate of Excellence in Team HR",
@@ -47,6 +49,7 @@ const GALLERY_ITEMS: GalleryItem[] = [
     src: "/assets/resume.jpg",
     gridClass:
       "md:col-start-1 md:row-start-4 lg:col-start-1 lg:row-start-3",
+    objectClass: "object-top",
   },
   {
     title: "Certificate of Tailwind CSS Workshop",
@@ -119,7 +122,7 @@ export default function Gallery() {
                 alt={item.title}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                className={`object-cover ${item.objectClass || "object-center"} group-hover:scale-[1.03] transition-transform duration-500`}
               />
 
               {/* Overlay gradient */}

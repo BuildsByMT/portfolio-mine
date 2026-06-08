@@ -8,10 +8,10 @@ import Image from "next/image";
 
 const CATEGORIES = [
   "All",
+  "Software Engineering",
   "AI Videos",
   "Academic Work",
   "Case Studies",
-  "Motion Graphics",
   "Research Projects",
   "UI/UX Concepts"
 ];
@@ -27,6 +27,7 @@ const PROJECTS: {
   year: string;
   link: string;
   video?: string;
+  objectClass?: string;
 }[] = [
   {
     title: "Coffee Beans Procurement Website",
@@ -41,7 +42,7 @@ const PROJECTS: {
   },
   {
     title: "8086 Traffic Lights Controller",
-    category: "Academic Work",
+    category: "Software Engineering",
     tagline: "Hardware simulation system matching logic gates with assembly directives.",
     description: "Hardware micro-controller system designed using an 8086 microprocessor simulation with C++ and Arduino code. Implemented complex cross-route timing sequences, hazard modes, and hardware interrupt callbacks.",
     image: "/assets/traffic_lights.png",
@@ -52,7 +53,7 @@ const PROJECTS: {
   },
   {
     title: "Library Management System",
-    category: "Research Projects",
+    category: "Software Engineering",
     tagline: "C# desktop dashboard with SQL queries and responsive analytics tables.",
     description: "A comprehensive Windows desktop system built on the .NET framework using C# and MS SQL database structures. Features transactional check-ins/check-outs, user authorization tiers, and clean modern styling with custom controls.",
     image: "/assets/library_system.png",
@@ -71,7 +72,8 @@ const PROJECTS: {
     tech: ["ElevenLabs", "AI Voice Synthesis", "Audio Post-Production", "Fiverr Services"],
     results: "Generated over 50+ hours of custom voiceovers with clear tones and professional pacing.",
     year: "2025",
-    link: "https://www.fiverr.com/muzammil787?public_mode=true"
+    link: "https://www.fiverr.com/muzammil787?public_mode=true",
+    objectClass: "object-top"
   },
   {
     title: "Professional Case Studies & Assignments",
@@ -89,11 +91,33 @@ const PROJECTS: {
     category: "UI/UX Concepts",
     tagline: "Next-gen glassmorphism interface highlighting dark-mode data analytics.",
     description: "A dark theme interactive analytics panel featuring responsive grid items, chart visualizations, custom neon glow buttons, and sidebar transition systems. Explores extreme high-end digital agency layout visuals.",
-    image: "/assets/library_system.png", // fallback
+    image: "/assets/library_system.png",
     tech: ["React.js", "Figma", "Tailwind CSS", "Framer Motion"],
     results: "Awarded high ratings on design critique forums for its smooth micro-animations and accessibility.",
     year: "2025",
     link: "#"
+  },
+  {
+    title: "Global Financial Management: Rolls-Royce Plc Analysis",
+    category: "Academic Work",
+    tagline: "A strategic financial analysis evaluating capital structures, risk hedging, and investment decisions.",
+    description: "An in-depth academic research report analyzing the global financial management strategies of Rolls-Royce Plc. The study covers exchange rate risk management, optimal capital structure, financing decisions, and dividend policies in volatile global markets.",
+    image: "/assets/gfm_rolls_royce.png",
+    tech: ["Financial Analysis", "Macroeconomics", "Risk Hedging", "Capital Structures"],
+    results: "Delivered comprehensive evaluation of hedging strategies and capitalization structures.",
+    year: "2026",
+    link: "https://docs.google.com/document/d/18wCFJYHhN10ZdTAJ0BijVH6UAzReGYR9/edit?usp=drivesdk"
+  },
+  {
+    title: "Global Financial Management: Unilever Analysis",
+    category: "Research Projects",
+    tagline: "Treasury management, currency risk mitigation strategies, and dividend policy research.",
+    description: "Academic report investigating Unilever's treasury management operations, currency risk mitigation strategies, and global dividend policies across consumer merchandise markets.",
+    image: "/assets/gfm_unilever.png",
+    tech: ["Financial Analysis", "Treasury Management", "Currency Risk", "Dividend Policy"],
+    results: "Formulated robust hedging and treasury models to mitigate volatile FX market exposures.",
+    year: "2026",
+    link: "https://docs.google.com/document/d/14EQfaX2jPcP9CxXUR6pDvzdTrL_f1xnK/edit?usp=drivesdk"
   }
 ];
 
@@ -191,7 +215,7 @@ export default function Portfolio() {
                     alt={project.title}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className={`object-cover ${project.objectClass || "object-center"} group-hover:scale-105 transition-transform duration-500`}
                   />
                   {/* Glass overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/90 via-transparent to-transparent opacity-60 group-hover:opacity-85 transition-opacity" />
@@ -319,7 +343,7 @@ export default function Portfolio() {
                     src={selectedProject.image}
                     alt={selectedProject.title}
                     fill
-                    className="object-cover"
+                    className={`object-cover ${selectedProject.objectClass || "object-center"}`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#030014]/60 to-transparent" />
                 </div>

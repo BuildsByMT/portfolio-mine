@@ -74,7 +74,7 @@ export default function Footer() {
           {/* Social connections */}
           <div className="flex gap-4">
             <a
-              href="https://github.com"
+              href="https://github.com/BuildsByMT"
               target="_blank"
               rel="noreferrer"
               className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/3 border border-white/5 hover:border-[#00f2fe] hover:text-[#00f2fe] text-gray-400 transition-all duration-300"
@@ -115,7 +115,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-4 font-sans text-[11px] text-gray-500 font-light">
           <p>© {new Date().getFullYear()} Muzammil Tanveer. All rights reserved.</p>
           <div className="flex gap-4">
-            <span className="cursor-default">Built with Next.js & Tailwind CSS v4</span>
+            <span className="cursor-default">Striving for elegant solutions to complex problems.</span>
             <span className="text-gray-700">|</span>
             <a href="#home" onClick={handleScrollToTop} className="hover:text-white transition-colors">
               Back to Top

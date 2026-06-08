@@ -1,30 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Mail, MessageSquare, ArrowRight, Download } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 import Image from "next/image";
 
-const ROLES = [
-  "AI Video Creator",
-  "Academic Writer",
-  "Research Specialist",
-  "Case Study Expert",
-  "Report Designer",
-  "Creative Freelancer",
-  "Digital Creator"
-];
-
 export default function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % ROLES.length);
-    }, 2800);
-    return () => clearInterval(timer);
-  }, []);
 
   const handleScrollTo = (path: string, id: string) => {
     const target = document.getElementById(id);
@@ -95,30 +77,19 @@ export default function Hero() {
             </span>
           </motion.h1>
 
-          {/* Dynamic Role Rotator */}
+          {/* Static Role Display */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="h-10 sm:h-12 flex items-center mb-6 overflow-hidden"
+            className="h-10 sm:h-12 flex items-center mb-6"
           >
             <span className="font-sans text-lg sm:text-2xl text-gray-400 font-medium mr-2">
               I am a
             </span>
-            <div className="relative h-full flex-1 min-w-[200px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={roleIndex}
-                  initial={{ y: 25, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -25, opacity: 0 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className="absolute inset-0 flex items-center font-display text-lg sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#e100ff] to-[#7f00ff] tracking-wide"
-                >
-                  {ROLES[roleIndex]}
-                </motion.div>
-              </AnimatePresence>
-            </div>
+            <span className="font-display text-lg sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#e100ff] to-[#7f00ff] tracking-wide">
+              Software Engineer
+            </span>
           </motion.div>
 
           {/* Professional Paragraph */}
@@ -175,7 +146,7 @@ export default function Hero() {
             </span>
             <div className="flex gap-4">
               <a
-                href="https://github.com"
+                href="https://github.com/BuildsByMT"
                 target="_blank"
                 rel="noreferrer"
                 className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-[#00f2fe]/20 hover:border-[#00f2fe] hover:text-[#00f2fe] text-gray-300 transition-all duration-300"
