@@ -256,7 +256,7 @@ export default function Services() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedGroup(null)}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+            className="fixed inset-0 z-[100] overflow-y-auto p-4 bg-black/90 backdrop-blur-md flex justify-center items-start"
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
@@ -264,7 +264,7 @@ export default function Services() {
               exit={{ scale: 0.9, y: 20 }}
               transition={{ type: "spring", duration: 0.5 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/10 bg-[#07051a]/95 shadow-2xl p-6 sm:p-8"
+              className="relative w-full max-w-4xl rounded-3xl border border-white/10 bg-[#07051a]/95 shadow-2xl p-6 sm:p-8 my-4 sm:my-8"
             >
               {/* Header Back Pill and Close Button Row */}
               <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">

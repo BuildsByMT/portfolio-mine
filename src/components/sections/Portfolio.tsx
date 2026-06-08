@@ -245,14 +245,16 @@ export default function Portfolio() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+            onClick={() => setSelectedProject(null)}
+            className="fixed inset-0 z-[100] overflow-y-auto p-4 bg-black/80 backdrop-blur-md flex justify-center items-start"
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               transition={{ type: "spring", duration: 0.5 }}
-              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/10 bg-[#07051a]/95 shadow-2xl p-6 sm:p-8"
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-3xl rounded-3xl border border-white/10 bg-[#07051a]/95 shadow-2xl p-6 sm:p-8 my-4 sm:my-8"
             >
               {/* Header Back Pill and Close Button Row */}
               <div className="flex items-center justify-between mb-6">
