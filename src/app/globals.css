@@ -127,11 +127,20 @@ body {
   }
 }
 
-/* Disable backdrop-filter and heavy background ambient glows globally on touch-only coarse devices to avoid GPU rendering glitches on mobile */
+/* Disable backdrop-filter, transitions, hover animations, and heavy blurs globally on touch devices to avoid mobile GPU rendering glitches */
 @media (pointer: coarse) {
   * {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+    transition: none !important;
+    transition-property: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  *:hover {
+    transform: none !important;
+    scale: none !important;
   }
   
   /* Overrides for backdrop-blur utility classes on touch screens to ensure content remains readable with opaque backgrounds */
@@ -148,10 +157,19 @@ body {
   }
 }
 
-/* Also disable backdrop-filter and background glows on elements with .is-touch class (detected via client-side JavaScript) to capture mobile desktop site spoofing */
+/* Also disable transitions, backdrop-filter, and glows on elements with .is-touch class to capture mobile desktop site spoofing */
 .is-touch * {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  transition: none !important;
+  transition-property: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.is-touch *:hover {
+  transform: none !important;
+  scale: none !important;
 }
 
 .is-touch .glass-panel {
