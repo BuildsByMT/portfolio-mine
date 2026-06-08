@@ -117,6 +117,37 @@ export default function Services() {
   const [selectedGroup, setSelectedGroup] = useState<typeof SERVICE_GROUPS[0] | null>(null);
 
   useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      if (path.startsWith("/services/capabilities/")) {
+        const groupId = path.split("/").pop();
+        const group = SERVICE_GROUPS.find((g) => g.id === groupId);
+        if (group) {
+          setSelectedGroup(group);
+          return;
+        }
+      }
+      setSelectedGroup(null);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    // Initial check for deep link on mount
+    const initialPath = window.location.pathname;
+    if (initialPath.startsWith("/services/capabilities/")) {
+      const groupId = initialPath.split("/").pop();
+      const group = SERVICE_GROUPS.find((g) => g.id === groupId);
+      if (group) {
+        setSelectedGroup(group);
+      }
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
+  useEffect(() => {
     if (selectedGroup) {
       document.body.style.overflow = "hidden";
     } else {
@@ -127,8 +158,18 @@ export default function Services() {
     };
   }, [selectedGroup]);
 
+  const handleOpenGroup = (group: typeof SERVICE_GROUPS[0]) => {
+    setSelectedGroup(group);
+    window.history.pushState(null, "", `/services/capabilities/${group.id}`);
+  };
+
+  const handleCloseGroup = () => {
+    setSelectedGroup(null);
+    window.history.pushState(null, "", "/services");
+  };
+
   const handleScrollToContact = (serviceName: string) => {
-    const contactSection = document.querySelector("#contact");
+    const contactSection = document.getElementById("contact");
     if (contactSection) {
       // Pre-fill service selector and message field in contact form
       const serviceSelect = document.querySelector("#contact-service") as HTMLSelectElement;
@@ -155,6 +196,7 @@ export default function Services() {
       const navHeight = 70;
       const elementPosition = contactSection.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - navHeight;
+      window.history.pushState(null, "", "/contact");
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
@@ -204,7 +246,7 @@ export default function Services() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.1, duration: 0.5 }}
                 key={group.id}
-                onClick={() => setSelectedGroup(group)}
+                onClick={() => handleOpenGroup(group)}
                 className={`group relative glass-panel p-8 rounded-3xl border border-white/5 cursor-pointer transition-all duration-500 flex flex-col justify-between h-full ${group.glow}`}
               >
                 <div>
@@ -255,7 +297,7 @@ export default function Services() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelectedGroup(null)}
+            onClick={handleCloseGroup}
             className="fixed inset-0 z-[100] overflow-y-auto p-4 bg-black/90 backdrop-blur-md flex justify-center items-start"
           >
             <motion.div
@@ -269,7 +311,7 @@ export default function Services() {
               {/* Header Back Pill and Close Button Row */}
               <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
                 <button
-                  onClick={() => setSelectedGroup(null)}
+                  onClick={handleCloseGroup}
                   className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white hover:border-[#00f2fe]/30 transition-all duration-300 cursor-pointer text-xs font-sans font-semibold"
                 >
                   <ArrowLeft className="w-3.5 h-3.5 text-[#00f2fe]" />
@@ -281,7 +323,7 @@ export default function Services() {
                 </h3>
 
                 <button
-                  onClick={() => setSelectedGroup(null)}
+                  onClick={handleCloseGroup}
                   className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center text-white hover:text-[#00f2fe] transition-colors cursor-pointer"
                   aria-label="Close details"
                 >
@@ -332,7 +374,7 @@ export default function Services() {
                     {/* CTA Buttons Row */}
                     <div className="flex flex-col sm:flex-row gap-2 mt-auto">
                       <button
-                        onClick={() => {
+                          onClick={() => {
                           setSelectedGroup(null);
                           handleScrollToContact(service.title);
                         }}

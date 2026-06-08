@@ -6,19 +6,21 @@ import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 export default function Footer() {
   const handleScrollToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    window.history.pushState(null, "", "/");
     window.scrollTo({
       top: 0,
       behavior: "smooth"
     });
   };
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string, targetId: string) => {
     e.preventDefault();
-    const target = document.querySelector(id);
+    const target = document.getElementById(targetId);
     if (target) {
       const navHeight = 70;
       const elementPosition = target.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - navHeight;
+      window.history.pushState(null, "", path);
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
@@ -42,7 +44,7 @@ export default function Footer() {
           
           {/* Logo & Brief slogan */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left gap-2">
-            <a href="#home" onClick={handleScrollToTop} className="font-display font-extrabold text-2xl tracking-tighter text-white hover:text-[#00f2fe] transition-colors select-none">
+            <a href="/" onClick={handleScrollToTop} className="font-display font-extrabold text-2xl tracking-tighter text-white hover:text-[#00f2fe] transition-colors select-none">
               M<span className="text-[#00f2fe]">T</span>
             </a>
             <p className="font-sans text-xs text-gray-500 font-light max-w-xs">
@@ -52,19 +54,19 @@ export default function Footer() {
 
           {/* Quick links list */}
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-            <a href="#about" onClick={(e) => handleLinkClick(e, "#about")} className="font-sans text-xs font-semibold uppercase tracking-wider text-gray-400 hover:text-white transition-colors">
+            <a href="/about" onClick={(e) => handleLinkClick(e, "/about", "about")} className="font-sans text-xs font-semibold uppercase tracking-wider text-gray-400 hover:text-white transition-colors">
               About
             </a>
-            <a href="#services" onClick={(e) => handleLinkClick(e, "#services")} className="font-sans text-xs font-semibold uppercase tracking-wider text-gray-400 hover:text-white transition-colors">
+            <a href="/services" onClick={(e) => handleLinkClick(e, "/services", "services")} className="font-sans text-xs font-semibold uppercase tracking-wider text-gray-400 hover:text-white transition-colors">
               Services
             </a>
-            <a href="#projects" onClick={(e) => handleLinkClick(e, "#projects")} className="font-sans text-xs font-semibold uppercase tracking-wider text-gray-400 hover:text-white transition-colors">
+            <a href="/projects" onClick={(e) => handleLinkClick(e, "/projects", "projects")} className="font-sans text-xs font-semibold uppercase tracking-wider text-gray-400 hover:text-white transition-colors">
               Projects
             </a>
-            <a href="#resume" onClick={(e) => handleLinkClick(e, "#resume")} className="font-sans text-xs font-semibold uppercase tracking-wider text-gray-400 hover:text-white transition-colors">
+            <a href="/resume" onClick={(e) => handleLinkClick(e, "/resume", "resume")} className="font-sans text-xs font-semibold uppercase tracking-wider text-gray-400 hover:text-white transition-colors">
               Resume
             </a>
-            <a href="#contact" onClick={(e) => handleLinkClick(e, "#contact")} className="font-sans text-xs font-semibold uppercase tracking-wider text-gray-400 hover:text-white transition-colors">
+            <a href="/contact" onClick={(e) => handleLinkClick(e, "/contact", "contact")} className="font-sans text-xs font-semibold uppercase tracking-wider text-gray-400 hover:text-white transition-colors">
               Contact
             </a>
           </div>

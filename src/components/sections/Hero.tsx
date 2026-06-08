@@ -26,12 +26,13 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleScrollTo = (id: string) => {
-    const target = document.querySelector(id);
+  const handleScrollTo = (path: string, id: string) => {
+    const target = document.getElementById(id);
     if (target) {
       const navHeight = 70;
       const elementPosition = target.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - navHeight;
+      window.history.pushState(null, "", path);
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
@@ -138,7 +139,7 @@ export default function Hero() {
             className="flex flex-wrap items-center gap-4 sm:gap-6 mb-10"
           >
             <button
-              onClick={() => handleScrollTo("#contact")}
+              onClick={() => handleScrollTo("/contact", "contact")}
               className="group flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#00f2fe] via-[#4facfe] to-[#7f00ff] text-black font-sans text-sm font-bold uppercase tracking-wider rounded-xl shadow-[0_0_20px_rgba(0,242,254,0.3)] hover:shadow-[0_0_30px_rgba(0,242,254,0.6)] hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               Hire Me
@@ -146,7 +147,7 @@ export default function Hero() {
             </button>
 
             <button
-              onClick={() => handleScrollTo("#projects")}
+              onClick={() => handleScrollTo("/projects", "projects")}
               className="flex items-center gap-2 px-7 py-3.5 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white font-sans text-sm font-semibold uppercase tracking-wider rounded-xl transition-all duration-300 cursor-pointer"
             >
               View Projects
@@ -274,8 +275,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Floating Mouse indicator to scroll down */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-gray-500 hover:text-white cursor-pointer transition-colors z-10 select-none" onClick={() => handleScrollTo("#about")}>
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-gray-500 hover:text-white cursor-pointer transition-colors z-10 select-none" onClick={() => handleScrollTo("/about", "about")}>
         <span className="font-sans text-[9px] uppercase tracking-[0.25em]">Scroll Down</span>
         <motion.div
           animate={{ y: [0, 5, 0] }}

@@ -5,14 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
 
 const NAV_LINKS = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Projects", href: "#projects" },
-  { name: "Resume", href: "#resume" },
-  { name: "Skills", href: "#skills" },
-  { name: "Gallery", href: "#gallery" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/", targetId: "home" },
+  { name: "About", href: "/about", targetId: "about" },
+  { name: "Services", href: "/services", targetId: "services" },
+  { name: "Projects", href: "/projects", targetId: "projects" },
+  { name: "Resume", href: "/resume", targetId: "resume" },
+  { name: "Skills", href: "/skills", targetId: "skills" },
+  { name: "Gallery", href: "/gallery", targetId: "gallery" },
+  { name: "Contact", href: "/contact", targetId: "contact" },
 ];
 
 export default function Navbar() {
@@ -49,15 +49,46 @@ export default function Navbar() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
+          const sectionId = entry.target.id;
+          setActiveSection(sectionId);
+
+          // Update URL in address bar when scrolling (avoid updating during modal popups)
+          const newPath = sectionId === "home" ? "/" : `/${sectionId}`;
+          if (
+            window.location.pathname !== newPath &&
+            !window.location.pathname.startsWith("/services/capabilities/")
+          ) {
+            window.history.replaceState(null, "", newPath);
+          }
         }
       });
     }, observerOptions);
 
     NAV_LINKS.forEach((link) => {
-      const el = document.querySelector(link.href);
+      const el = document.getElementById(link.targetId);
       if (el) observer.observe(el);
     });
+
+    // Check initial path on load (after preloader is finished)
+    const initialPath = window.location.pathname;
+    if (initialPath && initialPath !== "/") {
+      let targetId = initialPath.substring(1);
+      if (initialPath.startsWith("/services/capabilities/")) {
+        targetId = "services";
+      }
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        setTimeout(() => {
+          const navHeight = 70;
+          const elementPosition = targetEl.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - navHeight;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }, 300);
+      }
+    }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -65,14 +96,18 @@ export default function Navbar() {
     };
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: typeof NAV_LINKS[0]) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    const target = document.querySelector(href);
+    const target = document.getElementById(link.targetId);
     if (target) {
       const navHeight = 70;
       const elementPosition = target.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - navHeight;
+
+      // Update URL route history stack on click
+      window.history.pushState(null, "", link.href);
+      setActiveSection(link.targetId);
 
       window.scrollTo({
         top: offsetPosition,
@@ -99,8 +134,8 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
           <a
-            href="#home"
-            onClick={(e) => handleNavClick(e, "#home")}
+            href="/"
+            onClick={(e) => handleNavClick(e, NAV_LINKS[0])}
             className="flex items-center gap-2 group select-none"
           >
             <span className="font-display font-extrabold text-2xl tracking-tighter text-white group-hover:text-neon-cyan transition-colors">
@@ -115,12 +150,12 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map((link) => {
-              const isActive = activeSection === link.href.substring(1);
+              const isActive = activeSection === link.targetId;
               return (
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
+                  onClick={(e) => handleNavClick(e, link)}
                   className={`relative px-4 py-2 font-sans text-sm font-medium tracking-wide transition-colors ${
                     isActive ? "text-neon-cyan" : "text-gray-300 hover:text-white"
                   }`}
@@ -141,8 +176,8 @@ export default function Navbar() {
           {/* Hire Me CTA Button */}
           <div className="hidden lg:flex items-center">
             <a
-              href="#contact"
-              onClick={(e) => handleNavClick(e, "#contact")}
+              href="/contact"
+              onClick={(e) => handleNavClick(e, NAV_LINKS[7])}
               className="group flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-neon-purple to-neon-pink text-white font-sans text-xs font-semibold uppercase tracking-wider rounded-full shadow-[0_0_15px_rgba(127,0,255,0.3)] hover:shadow-[0_0_25px_rgba(225,0,255,0.5)] hover:scale-105 transition-all duration-300 border border-white/10"
             >
               Hire Me
@@ -177,7 +212,7 @@ export default function Navbar() {
 
             <div className="flex flex-col gap-6 my-auto">
               {NAV_LINKS.map((link, idx) => {
-                const isActive = activeSection === link.href.substring(1);
+                const isActive = activeSection === link.targetId;
                 return (
                   <motion.a
                     initial={{ opacity: 0, x: -20 }}
@@ -185,7 +220,7 @@ export default function Navbar() {
                     transition={{ delay: idx * 0.05 }}
                     key={link.name}
                     href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
+                    onClick={(e) => handleNavClick(e, link)}
                     className={`font-display text-3xl font-bold tracking-tight py-2 transition-colors ${
                       isActive 
                         ? "text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-blue" 
@@ -205,8 +240,8 @@ export default function Navbar() {
               className="mt-auto"
             >
               <a
-                href="#contact"
-                onClick={(e) => handleNavClick(e, "#contact")}
+                href="/contact"
+                onClick={(e) => handleNavClick(e, NAV_LINKS[7])}
                 className="w-full flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-neon-purple via-neon-pink to-neon-pink text-white font-sans text-sm font-semibold uppercase tracking-widest rounded-xl"
               >
                 Let's Talk
