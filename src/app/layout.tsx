@@ -27,6 +27,20 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${outfit.variable} scroll-smooth h-full antialiased`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+                if (isTouch) {
+                  document.documentElement.classList.add('is-touch');
+                }
+              })();
+            `
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-[#030014] text-[#f3f4f6]">
         {children}
       </body>
