@@ -289,7 +289,7 @@ export default function Portfolio() {
                   {selectedProject.video.includes("drive.google.com") ? (
                     <iframe
                       src={selectedProject.video.replace("/view", "/preview").replace("/edit", "/preview").split("?")[0] + "?autoplay=0"}
-                      className="w-full h-full border-0"
+                      className="absolute top-0 left-0 w-[200%] h-[200%] md:w-full md:h-full scale-50 md:scale-100 origin-top-left border-0"
                       allow="autoplay; encrypted-media"
                       allowFullScreen
                     />

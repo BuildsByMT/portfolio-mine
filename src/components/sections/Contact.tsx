@@ -146,11 +146,10 @@ export default function Contact() {
           </p>
         </div>
 
-        {/* Form Layout Split */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
           
           {/* Left Column: Direct info cards */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
+          <div className="md:col-span-5 flex flex-col gap-6">
             
             {/* Quick Contact detail panel */}
             <div className="glass-panel p-8 rounded-3xl border border-white/5 flex flex-col gap-6">
@@ -237,7 +236,7 @@ export default function Contact() {
           </div>
 
           {/* Right Column: Interactive Form */}
-          <div className="lg:col-span-7">
+          <div className="md:col-span-7">
             <motion.div
               layout
               className="glass-panel p-8 sm:p-10 rounded-3xl border border-white/5 relative overflow-hidden"
