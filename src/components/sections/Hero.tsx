@@ -42,7 +42,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden"
+      className="relative lg:min-h-screen flex items-center justify-center pt-28 pb-16 overflow-hidden"
     >
       {/* Visual Ambient Glows */}
       <div className="absolute top-1/4 left-1/10 w-[300px] h-[300px] bg-[#00f2fe]/10 blur-[100px] rounded-full pointer-events-none" />
@@ -208,67 +208,69 @@ export default function Hero() {
         </div>
 
         {/* Right Content (Profile Photo + Glass Cards) */}
-        <div className="lg:col-span-5 relative flex justify-center items-center mt-8 lg:mt-0">
-          {/* Neon Circular Orbit Ring */}
-          <div className="absolute w-[320px] sm:w-[400px] h-[320px] sm:h-[400px] border border-dashed border-white/10 rounded-full animate-[spin_40s_linear_infinite] pointer-events-none" />
-          <div className="absolute w-[260px] sm:w-[320px] h-[260px] sm:h-[320px] border border-[#00f2fe]/20 rounded-full animate-[spin_20s_linear_reverse_infinite] pointer-events-none" />
+        <div className="lg:col-span-5 flex justify-center items-center mt-8 lg:mt-0">
+          <div className="relative w-[280px] sm:w-[340px] aspect-[4/5] flex justify-center items-center">
+            {/* Neon Circular Orbit Ring */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[400px] h-[320px] sm:h-[400px] border border-dashed border-white/10 rounded-full animate-[spin_40s_linear_infinite] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] sm:w-[320px] h-[260px] sm:h-[320px] border border-[#00f2fe]/20 rounded-full animate-[spin_20s_linear_reverse_infinite] pointer-events-none" />
 
-          {/* Profile Card Frame */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.8, type: "spring" }}
-            className="relative w-[280px] sm:w-[340px] aspect-[4/5] rounded-3xl overflow-hidden glass-panel border border-white/10 p-3 shadow-2xl group cursor-none"
-          >
-            {/* Overlay Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#030014]/80 via-transparent to-transparent z-10" />
+            {/* Profile Card Frame */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.8, type: "spring" }}
+              className="relative w-full h-full rounded-3xl overflow-hidden glass-panel border border-white/10 p-3 shadow-2xl group cursor-none"
+            >
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#030014]/80 via-transparent to-transparent z-10" />
 
-            {/* Profile Image */}
-            <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-900">
-              <Image
-                src="/assets/portrait.jpg"
-                alt="Muzammil Tanveer"
-                fill
-                sizes="(max-width: 640px) 280px, 340px"
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-                priority
-              />
-            </div>
+              {/* Profile Image */}
+              <div className="relative w-full h-full rounded-2xl overflow-hidden bg-slate-900">
+                <Image
+                  src="/assets/portrait.jpg"
+                  alt="Muzammil Tanveer"
+                  fill
+                  sizes="(max-width: 640px) 280px, 340px"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  priority
+                />
+              </div>
 
-            {/* Glowing Highlights */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#7f00ff]/20 via-transparent to-[#00f2fe]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10" />
-          </motion.div>
+              {/* Glowing Highlights */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#7f00ff]/20 via-transparent to-[#00f2fe]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10" />
+            </motion.div>
 
-          {/* Floating Achievements/Badges */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="absolute top-10 -left-6 sm:-left-12 glass-card px-5 py-3 rounded-2xl border border-white/10 shadow-lg flex items-center gap-3 backdrop-blur-md z-20 hover:scale-105 transition-transform duration-300"
-          >
-            <div className="w-10 h-10 rounded-xl bg-[#00f2fe]/20 flex items-center justify-center font-display font-extrabold text-[#00f2fe] text-sm">
-              3.91
-            </div>
-            <div>
-              <p className="font-display font-bold text-xs text-white">CGPA</p>
-              <p className="font-sans text-[10px] text-gray-400">Academic Excellence</p>
-            </div>
-          </motion.div>
+            {/* Floating Achievements/Badges */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              className="absolute top-10 -left-6 sm:-left-12 glass-card px-5 py-3 rounded-2xl border border-white/10 shadow-lg flex items-center gap-3 backdrop-blur-md z-20 hover:scale-105 transition-transform duration-300"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#00f2fe]/20 flex items-center justify-center font-display font-extrabold text-[#00f2fe] text-sm">
+                3.91
+              </div>
+              <div>
+                <p className="font-display font-bold text-xs text-white">CGPA</p>
+                <p className="font-sans text-[10px] text-gray-400">Academic Excellence</p>
+              </div>
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-            className="absolute bottom-10 -right-6 sm:-right-12 glass-card px-5 py-3 rounded-2xl border border-white/10 shadow-lg flex items-center gap-3 backdrop-blur-md z-20 hover:scale-105 transition-transform duration-300"
-          >
-            <div className="w-10 h-10 rounded-xl bg-[#7f00ff]/20 flex items-center justify-center font-display font-extrabold text-[#e100ff] text-sm">
-              6th
-            </div>
-            <div>
-              <p className="font-display font-bold text-xs text-white">Semester</p>
-              <p className="font-sans text-[10px] text-gray-400">Completed (BS SE)</p>
-            </div>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              className="absolute bottom-10 -right-6 sm:-right-12 glass-card px-5 py-3 rounded-2xl border border-white/10 shadow-lg flex items-center gap-3 backdrop-blur-md z-20 hover:scale-105 transition-transform duration-300"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#7f00ff]/20 flex items-center justify-center font-display font-extrabold text-[#e100ff] text-sm">
+                6th
+              </div>
+              <div>
+                <p className="font-display font-bold text-xs text-white">Semester</p>
+                <p className="font-sans text-[10px] text-gray-400">Completed (BS SE)</p>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
 

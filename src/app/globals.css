@@ -95,7 +95,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (pointer: fine) {
   .glass-panel {
     background: rgba(10, 7, 30, 0.45);
     backdrop-filter: blur(16px) saturate(180%);
@@ -119,11 +119,27 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (pointer: fine) {
   .glass-card {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* Disable backdrop-filter globally on touch-only coarse devices to avoid GPU rendering glitches over canvas backgrounds on mobile */
+@media (pointer: coarse) {
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* Overrides for backdrop-blur utility classes on touch screens to ensure content remains readable with opaque backgrounds */
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl {
+    background-color: rgba(3, 0, 20, 0.9) !important;
   }
 }
 
