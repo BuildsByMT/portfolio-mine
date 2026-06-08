@@ -127,49 +127,68 @@ body {
   }
 }
 
-/* Disable backdrop-filter, transitions, hover animations, and heavy blurs globally on touch devices to avoid mobile GPU rendering glitches */
+/*
+ * Mobile GPU glitch prevention — TWO-TIER strategy.
+ *
+ * TIER 1 — ALL touch devices (pointer: coarse):
+ *   Disable only the three root causes of GPU compositing artifacts:
+ *     1. Canvas particles → handled in ParticleBackground.tsx
+ *     2. backdrop-filter blur compositing
+ *     3. Large CSS filter:blur() ambient glow divs
+ *   Also hide the custom cursor (useless on touch, mix-blend-mode is GPU-killer).
+ *   Normal transitions, shadows, and Framer Motion all work fine.
+ *
+ * TIER 2 — DESKTOP-SITE MODE on mobile (pointer: coarse + min-width: 980px):
+ *   Chrome "Request Desktop Site" renders at ~980px viewport on a touch screen.
+ *   The full desktop layout creates far more GPU compositing layers than budget
+ *   Mali GPUs can handle, causing horizontal artifact lines.
+ *   → Disable CSS transitions, box-shadows, text-shadows, and CSS animations.
+ *   Normal mobile view (~360px viewport) is NOT affected.
+ */
+
+/* ── TIER 1: All touch devices ── */
 @media (pointer: coarse) {
   * {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    transition: none !important;
-    transition-property: none !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
   }
-  
-  *:hover {
-    transform: none !important;
-    scale: none !important;
-  }
-  
-  /* Overrides for backdrop-blur utility classes on touch screens to ensure content remains readable with opaque backgrounds */
+
   .backdrop-blur-sm,
   .backdrop-blur-md,
   .backdrop-blur-lg,
   .backdrop-blur-xl {
-    background-color: rgba(3, 0, 20, 0.9) !important;
+    background-color: rgba(3, 0, 20, 0.92) !important;
   }
 
-  /* Hide heavy blurred ambient glow divs to prevent GPU compositing buffer overflows */
   [class*="blur-["] {
+    display: none !important;
+  }
+
+  .custom-cursor,
+  .custom-cursor-dot {
     display: none !important;
   }
 }
 
-/* Also disable transitions, backdrop-filter, and glows on elements with .is-touch class to capture mobile desktop site spoofing */
+/* ── TIER 2: Desktop-site mode on mobile ONLY ── */
+@media (pointer: coarse) and (min-width: 980px) {
+  * {
+    transition: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+  }
+}
+
+/* ── JS-detected .is-touch fallback (catches desktop-site UA spoofing) ── */
 .is-touch * {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  transition: none !important;
-  transition-property: none !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
 }
 
-.is-touch *:hover {
-  transform: none !important;
-  scale: none !important;
+.is-touch .custom-cursor,
+.is-touch .custom-cursor-dot {
+  display: none !important;
 }
 
 .is-touch .glass-panel {
@@ -189,6 +208,14 @@ body {
 
 .is-touch [class*="blur-["] {
   display: none !important;
+}
+
+/* JS-detected desktop-site mode: aggressive GPU reduction */
+.is-desktop-site-on-mobile * {
+  transition: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  animation: none !important;
 }
 
 /* Neon text & glow shadows */

@@ -36,6 +36,26 @@ export default function RootLayout({
                 if (isTouch) {
                   document.documentElement.classList.add('is-touch');
                 }
+                // Detect desktop-site mode: touch device but viewport rendered at desktop width.
+                // Chrome "Request Desktop Site" sets viewport to ~980px while physical screen stays ~360px.
+                function checkDesktopSite() {
+                  if (isTouch && window.innerWidth >= 980) {
+                    document.documentElement.classList.add('is-desktop-site-on-mobile');
+                  }
+                }
+                if (document.readyState !== 'loading') {
+                  checkDesktopSite();
+                } else {
+                  document.addEventListener('DOMContentLoaded', checkDesktopSite);
+                }
+                // Also re-check on resize (user might toggle desktop site mode)
+                window.addEventListener('resize', function() {
+                  if (isTouch && window.innerWidth >= 980) {
+                    document.documentElement.classList.add('is-desktop-site-on-mobile');
+                  } else if (isTouch) {
+                    document.documentElement.classList.remove('is-desktop-site-on-mobile');
+                  }
+                });
               })();
             `
           }}
