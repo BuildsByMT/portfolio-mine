@@ -220,7 +220,7 @@ export default function Hero() {
               className="absolute top-10 -left-6 sm:-left-12 glass-card px-5 py-3 rounded-2xl border border-white/10 shadow-lg flex items-center gap-3 backdrop-blur-md z-20 hover:scale-105 transition-transform duration-300"
             >
               <div className="w-10 h-10 rounded-xl bg-[#00f2fe]/20 flex items-center justify-center font-display font-extrabold text-[#00f2fe] text-sm">
-                3.91
+                3.90
               </div>
               <div>
                 <p className="font-display font-bold text-xs text-white">CGPA</p>

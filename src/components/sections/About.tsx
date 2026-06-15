@@ -5,7 +5,7 @@ import { GraduationCap, Award, BookOpen, Clock, Heart, Star, Sparkles } from "lu
 import { useEffect, useState, useRef } from "react";
 
 const STATS = [
-  { value: 3.91, label: "Academic CGPA", suffix: "", decimals: 2 },
+  { value: 3.90, label: "Academic CGPA", suffix: "", decimals: 2 },
   { value: 6, label: "Semesters Completed", suffix: "", decimals: 0 },
   { value: 20, label: "Freelance Projects", suffix: "+", decimals: 0 },
   { value: 6, label: "Services Offered", suffix: "", decimals: 0 },
@@ -123,7 +123,7 @@ export default function About() {
               </h3>
 
               <p className="font-sans text-gray-300 text-sm sm:text-base leading-relaxed font-light mb-6">
-                Having completed my <strong className="text-white font-medium">6th Semester of Bachelor of Software Engineering</strong> at PMAS Arid Agriculture University, Rawalpindi, with an academic excellence benchmark of <strong className="text-[#00f2fe] font-bold">CGPA of 3.91</strong>, I have cultivated a deep scientific approach to problem-solving.
+                Having completed my <strong className="text-white font-medium">6th Semester of Bachelor of Software Engineering</strong> at PMAS Arid Agriculture University, Rawalpindi, with an academic excellence benchmark of <strong className="text-[#00f2fe] font-bold">CGPA of 3.90</strong>, I have cultivated a deep scientific approach to problem-solving.
               </p>
 
               <p className="font-sans text-gray-300 text-sm sm:text-base leading-relaxed font-light mb-6">
